@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'login/login.dart';
+import 'login/register.dart';
 
 //Lib Firebase Auth
 //https://pub.dev/packages/firebase_auth/example
@@ -33,76 +35,84 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Love found it",
-            style: TextStyle(color: Colors.black, fontSize: 40)),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            const Icon(
-              Icons.favorite,
-              size: 100,
-              color: Colors.pink,
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Icon(
+                  Icons.favorite,
+                  color: Colors.pink,
+                  size: 50,
+                ),
+              ),
+              Text("Love found it",
+                  style: TextStyle(color: Colors.white, fontSize: 40)),
+            ]),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+              child: Text(
+                "Al pulsar Crear cuenta o Iniciar sesión, aceptas nuestros términos y condiciones. Obtén más informacion sobre cómo procesamos tus datos en nuestra política de privacidad y cookies.",
+                style: TextStyle(color: Colors.white, fontSize: 12),
+                textAlign: TextAlign.center,
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Login',
-                  hintStyle: const TextStyle(color: Colors.black),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 50),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white)),
+                      child: const Text(
+                        'CREAR UNA CUENTA',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegisterPageFull(),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  hintStyle: const TextStyle(color: Colors.black),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 50),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.pink)),
+                      child: const Text('INICIAR SESIÓN'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPageFull(),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text('Login',
-                    style: TextStyle(color: Colors.white, fontSize: 15)),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.red),
-                ),
-                child: const Text('Login with Google',
-                    style: TextStyle(color: Colors.white, fontSize: 15)),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black),
-                ),
-                child: const Text('Login with Apple 🍎',
-                    style: TextStyle(color: Colors.white, fontSize: 15)),
-              ),
-            ),
+            const SizedBox(height: 10),
+            const Text("¿Olvidaste tu contraseña?",
+                style: TextStyle(color: Colors.white, fontSize: 15)),
+            const SizedBox(height: 100),
           ],
         ),
       ),
