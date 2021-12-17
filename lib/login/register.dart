@@ -10,11 +10,8 @@ class RegisterPageLess extends StatefulWidget {
 class _RegisterPageLessState extends State<RegisterPageLess> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const RegisterPageFull(),
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.pink[200],
-      ),
+    return const MaterialApp(
+      home: RegisterPageFull(),
     );
   }
 }
@@ -30,6 +27,7 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.pink[200],
       appBar: AppBar(
         backgroundColor: Colors.pink[200],
         elevation: 0,

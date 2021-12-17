@@ -5,9 +5,7 @@ class LoginPageLess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: const LoginPageFull(),
-        theme: ThemeData(scaffoldBackgroundColor: Colors.pink[200]));
+    return const MaterialApp(home: LoginPageFull());
   }
 }
 
@@ -22,6 +20,7 @@ class _LoginPageFullState extends State<LoginPageFull> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.pink[200],
       appBar: AppBar(
         backgroundColor: Colors.pink[200],
         elevation: 0,

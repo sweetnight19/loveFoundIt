@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:love_found_it/login/recovery.dart';
 import 'login/login.dart';
 import 'login/register.dart';
 
@@ -14,12 +15,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Love Found it',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.pink[200],
-      ),
-      home: const MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
@@ -35,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.pink[200],
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -51,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text("Love found it",
                   style: TextStyle(color: Colors.white, fontSize: 40)),
             ]),
+            const SizedBox(height: 100),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
               child: Text(
@@ -110,8 +110,17 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             const SizedBox(height: 10),
-            const Text("¿Olvidaste tu contraseña?",
-                style: TextStyle(color: Colors.white, fontSize: 15)),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RecoveryFull(),
+                    ),
+                  );
+                },
+                child: const Text("¿Olvidaste tu contraseña?",
+                    style: TextStyle(color: Colors.white, fontSize: 15))),
             const SizedBox(height: 100),
           ],
         ),
