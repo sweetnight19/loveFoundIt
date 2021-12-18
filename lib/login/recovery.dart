@@ -5,7 +5,7 @@ class RecoveryLess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: const RecoveryFull());
+    return const MaterialApp(home: RecoveryFull());
   }
 }
 
@@ -33,20 +33,18 @@ class _RecoveryFullState extends State<RecoveryFull> {
           ),
           elevation: 0,
         ),
-        body: Column(
+        body: Form(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: TextField(
-                decoration: InputDecoration(
+              child: TextFormField(
+                decoration: const InputDecoration(
                   hintText: 'Correo electrónico',
-                  hintStyle: const TextStyle(
+                  hintStyle: TextStyle(
                     fontSize: 20,
                     color: Colors.black,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
@@ -67,6 +65,6 @@ class _RecoveryFullState extends State<RecoveryFull> {
               height: 50,
             ),
           ],
-        ));
+        )));
   }
 }
