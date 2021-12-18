@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Love Found it',
       home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
