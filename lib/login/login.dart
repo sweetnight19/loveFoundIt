@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:love_found_it/login/sign_with_mail.dart';
 import 'package:sign_button/sign_button.dart';
 
 import '../custom_widget.dart';
@@ -85,7 +86,16 @@ class _LoginPageFullState extends State<LoginPageFull> {
                       child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 60),
                           child: SignInButton(
-                              buttonType: ButtonType.mail, onPressed: () {})),
+                            buttonType: ButtonType.mail,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SingInFull(),
+                                ),
+                              );
+                            },
+                          )),
                     ),
                   ],
                 ),

@@ -4,11 +4,14 @@ import 'package:love_found_it/login/recovery.dart';
 import 'login/login.dart';
 import 'login/register.dart';
 
-//Lib Firebase Auth
-//https://pub.dev/packages/firebase_auth/example
+//Firebase
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -79,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             'CREAR UNA CUENTA',
                             style: TextStyle(color: Colors.black),
                           ),
-                          onPressed: () async {
+                          onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
