@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:love_found_it/widgets/primary_button.dart';
 
 import '../custom_widget.dart';
 
@@ -95,16 +96,7 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                     ),
                   ),
                   SizedBox(height: 40),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.pink)),
-                    child: Text(
-                      'Registrarse',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: onRegister,
-                  )
+                  primaryButton('Registrarse')
                 ])
             )
         )
