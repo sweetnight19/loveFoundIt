@@ -30,14 +30,12 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0
-        ),
+        appBar: AppBar(elevation: 0),
         body: Center(
             child: Container(
                 decoration: custom_background(),
                 child: ListView(children: <Widget>[
-                  Text(
+                  const Text(
                     'Register',
                     style: TextStyle(
                       fontSize: 30,
@@ -45,16 +43,16 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Text(
+                  const SizedBox(height: 20),
+                  const Text(
                     'Please fill in the form below to register',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  TextField(
+                  const SizedBox(height: 10),
+                  const TextField(
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       hintText: 'Username',
@@ -63,44 +61,41 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 30),
-                  TextField(
+                  const SizedBox(height: 30),
+                  const TextField(
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'Password',
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 40),
-                  TextField(
+                  const SizedBox(height: 40),
+                  const TextField(
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'Confirm Password',
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 40),
-                  TextField(
+                  const SizedBox(height: 40),
+                  const TextField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       hintText: 'Email',
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 40),
-                  TextField(
+                  const SizedBox(height: 40),
+                  const TextField(
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                       hintText: 'Phone Number',
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   primaryButton('Registrarse')
-                ])
-            )
-        )
-    );
+                ]))));
   }
 
   void onRegister() {

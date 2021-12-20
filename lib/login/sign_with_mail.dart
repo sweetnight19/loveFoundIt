@@ -1,5 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:love_found_it/API/api.dart';
 import 'package:love_found_it/widgets/primary_button.dart';
 
 class SignInLess extends StatelessWidget {
@@ -7,7 +7,7 @@ class SignInLess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: SingInFull());
+    return const MaterialApp(home: SingInFull());
   }
 }
 
@@ -80,21 +80,10 @@ class _SingInFullState extends State<SingInFull> {
               child: Row(
                 children: [
                   Expanded(
-                      child: primaryButton("INICIAR SESIÓN", () async {
-                    try {
-                      UserCredential userCredential = await FirebaseAuth
-                          .instance
-                          .signInWithEmailAndPassword(
-                              email: mailController.text,
-                              password: passwordController.text);
-                    } on FirebaseAuthException catch (e) {
-                      if (e.code == 'user-not-found') {
-                        print('No user found for that email.');
-                      } else if (e.code == 'wrong-password') {
-                        print('Wrong password provided for that user.');
-                      }
-                    }
-                  })),
+                      child: primaryButton(
+                          "INICIAR SESIÓN",
+                          signInWithMail(
+                              mailController.text, passwordController.text))),
                 ],
               ),
             ),

@@ -8,13 +8,12 @@ import 'login/register.dart';
 import 'widgets/secondary_button.dart';
 
 //Firebase
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -77,25 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50),
-<<<<<<< HEAD
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.white)),
-                          child: const Text(
-                            'CREAR UNA CUENTA',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RegisterPageFull(),
-                              ),
-                            );
-                          },
-                        ),
-=======
                         child: secondaryButton('CREAR UNA CUENTA', () {
                           Navigator.push(
                             context,
@@ -104,14 +84,11 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           );
                         }),
->>>>>>> b0f59bbdc0105288c498b629754441248a311f91
                       ),
                     ),
                   ],
                 ),
-                Row(children: [
-                  SizedBox(height: 20)
-                ]),
+                Row(children: const [SizedBox(height: 20)]),
                 Row(
                   children: [
                     Expanded(
