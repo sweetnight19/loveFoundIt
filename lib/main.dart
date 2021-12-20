@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:love_found_it/custom_widget.dart';
 import 'package:love_found_it/login/recovery.dart';
 import 'package:love_found_it/widgets/primary_button.dart';
+
 import 'login/login.dart';
 import 'login/register.dart';
+import 'widgets/secondary_button.dart';
 
 //Lib Firebase Auth
 //https://pub.dev/packages/firebase_auth/example
@@ -62,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
                   child: Text(
                     "Al pulsar Crear cuenta o Iniciar sesión, aceptas nuestros términos y condiciones. Obtén más informacion sobre cómo procesamos tus datos en nuestra política de privacidad y cookies.",
-                    style: TextStyle(color: Colors.white, fontSize: 12),
+                    style: TextStyle(color: Colors.white, fontSize: 13),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -72,27 +74,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50),
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.white)),
-                          child: const Text(
-                            'CREAR UNA CUENTA',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          onPressed: () async {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RegisterPageFull(),
-                              ),
-                            );
-                          },
-                        ),
+                        child: secondaryButton('CREAR UNA CUENTA', () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterPageLess(),
+                            ),
+                          );
+                        }),
                       ),
                     ),
                   ],
                 ),
+                Row(children: [
+                  SizedBox(height: 20)
+                ]),
                 Row(
                   children: [
                     Expanded(
