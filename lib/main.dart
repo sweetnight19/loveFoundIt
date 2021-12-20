@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:love_found_it/custom_widget.dart';
 import 'package:love_found_it/login/recovery.dart';
+import 'package:love_found_it/widgets/primary_button.dart';
+
 import 'login/login.dart';
 import 'login/register.dart';
+import 'widgets/secondary_button.dart';
 
 //Firebase
 import 'package:firebase_auth/firebase_auth.dart';
@@ -64,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
                   child: Text(
                     "Al pulsar Crear cuenta o Iniciar sesión, aceptas nuestros términos y condiciones. Obtén más informacion sobre cómo procesamos tus datos en nuestra política de privacidad y cookies.",
-                    style: TextStyle(color: Colors.white, fontSize: 12),
+                    style: TextStyle(color: Colors.white, fontSize: 13),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -74,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50),
+<<<<<<< HEAD
                         child: ElevatedButton(
                           style: ButtonStyle(
                               backgroundColor:
@@ -91,29 +95,36 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                           },
                         ),
+=======
+                        child: secondaryButton('CREAR UNA CUENTA', () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterPageLess(),
+                            ),
+                          );
+                        }),
+>>>>>>> b0f59bbdc0105288c498b629754441248a311f91
                       ),
                     ),
                   ],
                 ),
+                Row(children: [
+                  SizedBox(height: 20)
+                ]),
                 Row(
                   children: [
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50),
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.pink)),
-                          child: const Text('INICIAR SESIÓN'),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginPageFull(),
-                              ),
-                            );
-                          },
-                        ),
+                        child: primaryButton('INICIAR SESSION', () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginPageFull(),
+                            ),
+                          );
+                        }),
                       ),
                     ),
                   ],
