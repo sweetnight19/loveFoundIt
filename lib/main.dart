@@ -7,10 +7,12 @@ import 'login/login.dart';
 import 'login/register.dart';
 import 'widgets/secondary_button.dart';
 
-//Lib Firebase Auth
-//https://pub.dev/packages/firebase_auth/example
+//Firebase
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -86,9 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
-                Row(children: [
-                  SizedBox(height: 20)
-                ]),
+                Row(children: const [SizedBox(height: 20)]),
                 Row(
                   children: [
                     Expanded(
