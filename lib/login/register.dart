@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:love_found_it/widgets/primary_button.dart';
+import 'package:love_found_it/widgets/text_field.dart';
 
 import '../custom_widget.dart';
 
@@ -64,37 +65,13 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                     ),
                   ),
                   SizedBox(height: 30),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
+                  textField('Passsword', true),
                   SizedBox(height: 40),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: 'Confirm Password',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
+                  textField('Confirm passsword', true),
                   SizedBox(height: 40),
-                  TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
+                  textField('Email'),
                   SizedBox(height: 40),
-                  TextField(
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      hintText: 'Phone Number',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
+                  textField('Phone Number'),
                   SizedBox(height: 40),
                   primaryButton('Registrarse')
                 ])
