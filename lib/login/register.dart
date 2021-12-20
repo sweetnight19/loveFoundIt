@@ -30,16 +30,17 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          elevation: 0,
+          elevation: 0
         ),
         body: Center(
             child: Container(
                 decoration: custom_background(),
-                child: ListView(children: const <Widget>[
+                child: ListView(children: <Widget>[
                   Text(
                     'Register',
                     style: TextStyle(
                       fontSize: 30,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -47,31 +48,21 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                   Text(
                     'Please fill in the form below to register',
                     style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Username',
-                    style: TextStyle(
+                      color: Colors.white,
                       fontSize: 20,
                     ),
                   ),
                   SizedBox(height: 10),
                   TextField(
+                    style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       hintText: 'Username',
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.white),
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Password',
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 30),
                   TextField(
                     obscureText: true,
                     decoration: InputDecoration(
@@ -79,14 +70,7 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Confirm Password',
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 40),
                   TextField(
                     obscureText: true,
                     decoration: InputDecoration(
@@ -94,14 +78,7 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Email',
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 40),
                   TextField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
@@ -109,14 +86,7 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Phone Number',
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 40),
                   TextField(
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
@@ -124,7 +94,24 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 20),
-                ]))));
+                  SizedBox(height: 40),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.pink)),
+                    child: Text(
+                      'Registrarse',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: onRegister,
+                  )
+                ])
+            )
+        )
+    );
+  }
+
+  void onRegister() {
+    print('heyeyyeey');
   }
 }
