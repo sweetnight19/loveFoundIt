@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:love_found_it/API/api.dart';
+import 'package:love_found_it/main.dart';
 import 'package:love_found_it/widgets/primary_button.dart';
 import 'package:love_found_it/widgets/text_field.dart';
 
@@ -28,17 +30,19 @@ class RegisterPageFull extends StatefulWidget {
 }
 
 class _RegisterPageFullState extends State<RegisterPageFull> {
+  final passwordController = TextEditingController();
+  final passwordConfirmController = TextEditingController();
+  final emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0
-        ),
+        appBar: AppBar(elevation: 0),
         body: Center(
             child: Container(
-                decoration: custom_background(),
+                decoration: customBackground(),
                 child: ListView(children: <Widget>[
-                  Text(
+                  const Text(
                     'Register',
                     style: TextStyle(
                       fontSize: 30,
@@ -46,41 +50,92 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Text(
+                  const SizedBox(height: 20),
+                  const Text(
                     'Please fill in the form below to register',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  TextField(
+                  const SizedBox(height: 40),
+                  const TextField(
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       hintText: 'Username',
-                      labelStyle: TextStyle(color: Colors.white),
-                      hintStyle: TextStyle(color: Colors.white),
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 30),
-                  textField('Passsword', true),
-                  SizedBox(height: 40),
-                  textField('Confirm passsword', true),
-                  SizedBox(height: 40),
-                  textField('Email'),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 30),
+                  TextField(
+                    controller: passwordController,
+                    obscureText: true,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      hintText: "Password",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  TextField(
+                    controller: passwordConfirmController,
+                    obscureText: true,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      hintText: "Confirm Password",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  TextField(
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      hintText: "Email",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
                   textField('Phone Number'),
-                  SizedBox(height: 40),
-                  primaryButton('Registrarse')
-                ])
-            )
-        )
-    );
+                  const SizedBox(height: 40),
+                  primaryButton('Registrarse', () {
+                    if (checkPassword(passwordController.text,
+                        passwordConfirmController.text, context)) {
+                      registerWithMail(
+                          passwordController.text, emailController.text);
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MyApp(),
+                        ),
+                      );
+                    }
+                  }),
+                ]))));
   }
 
   void onRegister() {
     print('heyeyyeey');
+  }
+
+  bool checkPassword(String text, String text2, BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    if (text.length < 6) {
+      scaffold.showSnackBar(const SnackBar(
+        content: Text('Password must be at least 6 characters'),
+        backgroundColor: Colors.red,
+      ));
+      return false;
+    }
+
+    if (text != text2) {
+      scaffold.showSnackBar(const SnackBar(
+        content: Text('Passwords do not match'),
+        backgroundColor: Colors.red,
+      ));
+      return false;
+    }
+    return true;
   }
 }

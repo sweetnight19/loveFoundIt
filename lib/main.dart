@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.pink[200],
         body: Center(
           child: Container(
-            decoration: custom_background(),
+            decoration: customBackground(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[

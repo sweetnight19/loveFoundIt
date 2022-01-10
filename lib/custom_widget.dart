@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-BoxDecoration custom_background() {
+BoxDecoration customBackground() {
   return const BoxDecoration(
       gradient: LinearGradient(
     begin: Alignment.topRight,

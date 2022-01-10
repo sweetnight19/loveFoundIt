@@ -31,7 +31,7 @@ class _LoginPageFullState extends State<LoginPageFull> {
         ),
         body: Center(
           child: Container(
-            decoration: custom_background(),
+            decoration: customBackground(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
