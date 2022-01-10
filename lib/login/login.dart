@@ -27,9 +27,11 @@ class _LoginPageFullState extends State<LoginPageFull> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.black),
           elevation: 0,
+          backgroundColor: Colors.transparent,
         ),
         body: Center(
           child: Container(
@@ -80,17 +82,6 @@ class _LoginPageFullState extends State<LoginPageFull> {
                       child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 60),
                           child: SignInButton(
-                              buttonType: ButtonType.appleDark,
-                              onPressed: () {})),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 60),
-                          child: SignInButton(
                             buttonType: ButtonType.mail,
                             onPressed: () {
                               Navigator.push(
@@ -116,7 +107,7 @@ class _LoginPageFullState extends State<LoginPageFull> {
                     },
                     child: const Text("¿Olvidaste tu contraseña?",
                         style: TextStyle(color: Colors.white, fontSize: 15))),
-                const SizedBox(height: 100),
+                const SizedBox(height: 150),
               ],
             ),
           ),

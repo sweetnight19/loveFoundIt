@@ -36,10 +36,14 @@ class _RecoveryFullState extends State<RecoveryFull> {
           ),
           elevation: 0,
         ),
-        body: Form(
-            child: Column(
+        body: SingleChildScrollView(
+            child: Form(
+                child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            const SizedBox(
+              height: 200,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
@@ -54,7 +58,7 @@ class _RecoveryFullState extends State<RecoveryFull> {
               ),
             ),
             const SizedBox(
-              height: 200,
+              height: 100,
             ),
             ElevatedButton(
               onPressed: () {
@@ -71,6 +75,6 @@ class _RecoveryFullState extends State<RecoveryFull> {
               height: 50,
             ),
           ],
-        )));
+        ))));
   }
 }

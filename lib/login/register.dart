@@ -18,6 +18,7 @@ class _RegisterPageLessState extends State<RegisterPageLess> {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: RegisterPageFull(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -37,7 +38,16 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(elevation: 0),
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MyApp())),
+          ),
+          backgroundColor: Colors.transparent,
+        ),
         body: Center(
             child: Container(
                 decoration: customBackground(),
