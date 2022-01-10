@@ -41,3 +41,9 @@ void sendEmail() async {
     print('Email sent');
   }
 }
+
+void recoveryWithEmail(String mail) async {
+  await FirebaseAuth.instance.sendPasswordResetEmail(
+    email: mail,
+  );
+}

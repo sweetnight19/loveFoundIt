@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:love_found_it/API/api.dart';
 
 class RecoveryLess extends StatelessWidget {
   const RecoveryLess({Key? key}) : super(key: key);
@@ -17,6 +18,8 @@ class RecoveryFull extends StatefulWidget {
 }
 
 class _RecoveryFullState extends State<RecoveryFull> {
+  final mailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +43,7 @@ class _RecoveryFullState extends State<RecoveryFull> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                controller: mailController,
                 decoration: const InputDecoration(
                   hintText: 'Correo electrónico',
                   hintStyle: TextStyle(
@@ -53,7 +57,9 @@ class _RecoveryFullState extends State<RecoveryFull> {
               height: 200,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                recoveryWithEmail(mailController.text);
+              },
               child: const Text(
                 "ENVIAR CORREO",
                 style: TextStyle(fontSize: 20, color: Colors.black),

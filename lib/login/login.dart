@@ -67,9 +67,10 @@ class _LoginPageFullState extends State<LoginPageFull> {
                       child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 60),
                           child: SignInButton(
-                              buttonType: ButtonType.google, onPressed: () {
-                              signInWithGoogle();
-                          })),
+                              buttonType: ButtonType.google,
+                              onPressed: () {
+                                signInWithGoogle();
+                              })),
                     ),
                   ],
                 ),
@@ -127,7 +128,8 @@ class _LoginPageFullState extends State<LoginPageFull> {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
