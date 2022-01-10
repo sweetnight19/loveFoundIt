@@ -23,11 +23,21 @@ registerWithMail(String password, String mail) async {
       email: mail,
       password: password,
     );
+    sendEmail();
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
       print('No user found for that email.');
     } else if (e.code == 'wrong-password') {
       print('Wrong password provided for that user.');
     }
+  }
+}
+
+void sendEmail() async {
+  User? user = FirebaseAuth.instance.currentUser;
+
+  if (user != null && !user.emailVerified) {
+    await user.sendEmailVerification();
+    print('Email sent');
   }
 }
