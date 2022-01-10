@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "445166218844",
+    "firebase_url": "https://lovefoundit-4e54e-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "lovefoundit-4e54e",
     "storage_bucket": "lovefoundit-4e54e.appspot.com"
   },
@@ -29,6 +30,13 @@
             {
               "client_id": "445166218844-rcda23plu2bc1cb93ar5hsphodcpfha0.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "445166218844-uuin2al6mknkdfc58ih1akd5rjlpq3q7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.lovefoundit.loveFoundIt"
+              }
             }
           ]
         }
