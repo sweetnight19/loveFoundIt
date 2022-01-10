@@ -77,14 +77,16 @@ class _SingInFullState extends State<SingInFull> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: primaryButton(
-                          "INICIAR SESIÓN",
-                          signInWithMail(
-                              mailController.text, passwordController.text))),
-                ],
+              child: ElevatedButton(
+                onPressed: () {
+                  signInWithMail(mailController.text, passwordController.text);
+                },
+                child: const Text(
+                  "INICIAR SESIÓN",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
               ),
             ),
             const SizedBox(

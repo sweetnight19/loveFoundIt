@@ -7,6 +7,7 @@ signInWithMail(String mail, String password) async {
       email: mail,
       password: password,
     );
+    print(userCredential);
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
       print('No user found for that email.');
