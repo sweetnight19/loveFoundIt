@@ -19,6 +19,8 @@ class ListFull extends StatefulWidget {
 class _ListFullState extends State<ListFull> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(child: Text('Hello World')));
   }
 }
