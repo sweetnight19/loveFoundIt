@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:love_found_it/custom_widget.dart';
 import 'package:love_found_it/login/recovery.dart';
+import 'package:love_found_it/profile/profile.dart';
 import 'package:love_found_it/widgets/primary_button.dart';
 
 import 'login/login.dart';
@@ -104,6 +105,19 @@ class _MyHomePageState extends State<MyHomePage> {
                         }),
                       ),
                     ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 50),
+                        child: primaryButton('Profile', () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ProfilePageFull(),
+                            ),
+                          );
+                        }),
+                      ),
+                    )
                   ],
                 ),
                 const SizedBox(height: 10),
