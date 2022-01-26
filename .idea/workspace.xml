@@ -1,17 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="main.dart" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/main.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e4a12054-cb40-4eda-9c50-e6e0864b8c13" name="Default Changelist" comment="Fixed google sign in">
+      <change afterPath="$PROJECT_DIR$/lib/home/home.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/login/provider/google_sign_in.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/love_found_it_android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/android/love_found_it_android.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/login/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/login/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/love_found_it.iml" beforeDir="false" afterPath="$PROJECT_DIR$/love_found_it.iml" afterDir="false" />
+    </list>
+    <list id="fc9b2398-bc17-41b9-92ea-fdd28d44becb" name="nocommit" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/.gitignore" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/.idea/workspace.xml">
+      <ranges>
+        <range start1="2" end1="14" start2="2" end2="51" changelist="e4a12054-cb40-4eda-9c50-e6e0864b8c13" />
+        <range start1="15" end1="20" start2="52" end2="66" changelist="e4a12054-cb40-4eda-9c50-e6e0864b8c13" />
+        <range start1="21" end1="21" start2="67" end2="69" changelist="e4a12054-cb40-4eda-9c50-e6e0864b8c13" />
+        <range start1="22" end1="24" start2="70" end2="71" changelist="e4a12054-cb40-4eda-9c50-e6e0864b8c13" />
+        <range start1="30" end1="30" start2="77" end2="81" changelist="e4a12054-cb40-4eda-9c50-e6e0864b8c13" />
+        <range start1="31" end1="32" start2="82" end2="86" changelist="e4a12054-cb40-4eda-9c50-e6e0864b8c13" />
+        <range start1="33" end1="33" start2="87" end2="91" changelist="fc9b2398-bc17-41b9-92ea-fdd28d44becb" />
+        <range start1="34" end1="34" start2="92" end2="246" changelist="e4a12054-cb40-4eda-9c50-e6e0864b8c13" />
+        <range start1="36" end1="37" start2="248" end2="248" changelist="fc9b2398-bc17-41b9-92ea-fdd28d44becb" />
+      </ranges>
+    </file>
+  </component>
+  <component name="ProjectId" id="22FEj4CSDOM6ypQPHVRpkKnfHOu" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" />
+    <panes>
+      <pane id="ProjectPane">
+        <option name="show-excluded-files" value="false" />
+      </pane>
+    </panes>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="dart.analysis.tool.window.force.activate" value="true" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/widgets" />
+      <recent name="$PROJECT_DIR$/lib" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/android/app" />
+      <recent name="$PROJECT_DIR$/android" />
+      <recent name="$PROJECT_DIR$/lib/widgets" />
+      <recent name="$PROJECT_DIR$/lib/constants" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e4a12054-cb40-4eda-9c50-e6e0864b8c13" name="Default Changelist" comment="Fixed google services import" />
+      <changelist id="fc9b2398-bc17-41b9-92ea-fdd28d44becb" name="nocommit" comment="" />
+      <created>1639425067101</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1639425067101</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Updated min SDK version">
+      <created>1639425621030</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1639425621030</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Styled register form">
+      <created>1640026330704</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1640026330704</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Created color constants and added primary and secondary colors">
+      <created>1640028246594</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1640028246594</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Created primary button dart widget">
+      <created>1640028259497</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1640028259497</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Replaced register button with custom one">
+      <created>1640028279959</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1640028279959</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Replaced login button with custom button widget">
+      <created>1640028941856</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1640028941856</updated>
+    </task>
+    <task id="LOCAL-00007" summary="created secondary button and replaced main button home">
+      <created>1640029576050</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1640029576050</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Created text field widget">
+      <created>1640030618927</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1640030618927</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Replaced text fields with custom text fields widgets">
+      <created>1640030635242</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1640030635242</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added google sign in">
+      <created>1641839636260</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1641839636260</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Added .gitignore from .idea folder">
+      <created>1641839797486</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1641839797486</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Fixed google sign in">
+      <created>1642616020881</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1642616020881</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
   </component>
   <component name="ToolWindowManager">
     <editor active="true" />
@@ -19,18 +202,43 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
     </layout>
   </component>
-  <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <option name="show-excluded-files" value="false" />
-      </pane>
-    </panes>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="dart.analysis.tool.window.force.activate" value="true" />
-    <property name="show.migrate.to.gradle.popup" value="false" />
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fixed google services import" />
+    <MESSAGE value="Updated min SDK version" />
+    <MESSAGE value="Styled register form" />
+    <MESSAGE value="Created color constants and added primary and secondary colors" />
+    <MESSAGE value="Created primary button dart widget" />
+    <MESSAGE value="Replaced register button with custom one" />
+    <MESSAGE value="Replaced login button with custom button widget" />
+    <MESSAGE value="created secondary button and replaced main button home" />
+    <MESSAGE value="Created text field widget" />
+    <MESSAGE value="Replaced text fields with custom text fields widgets" />
+    <MESSAGE value="Added google sign in" />
+    <MESSAGE value="Added .gitignore from .idea folder" />
+    <MESSAGE value="Fixed google sign in" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed google sign in" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/login/login.dart</url>
+          <line>117</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
