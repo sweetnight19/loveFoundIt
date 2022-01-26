@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:love_found_it/API/api.dart';
-import 'package:love_found_it/widgets/primary_button.dart';
+import 'package:love_found_it/home/home.dart';
 
 class SignInLess extends StatelessWidget {
   const SignInLess({Key? key}) : super(key: key);
@@ -38,8 +38,9 @@ class _SingInFullState extends State<SingInFull> {
           ),
           elevation: 0,
         ),
-        body: Form(
-            child: Column(
+        body: SingleChildScrollView(
+            child: Form(
+                child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(
@@ -78,8 +79,27 @@ class _SingInFullState extends State<SingInFull> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ElevatedButton(
-                onPressed: () {
-                  signInWithMail(mailController.text, passwordController.text);
+                onPressed: () async {
+                  int result = await signInWithMail(
+                      mailController.text, passwordController.text);
+                  switch (result) {
+                    case 0:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeFull(),
+                        ),
+                      );
+                      break;
+                    case 1:
+                      checkLogin("No user found for that email", context);
+                      break;
+                    case 2:
+                      checkLogin(
+                          "Wrong password provided for that user", context);
+                      break;
+                    default:
+                  }
                 },
                 child: const Text(
                   "INICIAR SESIÓN",
@@ -93,6 +113,15 @@ class _SingInFullState extends State<SingInFull> {
               height: 50,
             ),
           ],
-        )));
+        ))));
+  }
+
+  void checkLogin(String text, BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+
+    scaffold.showSnackBar(SnackBar(
+      content: Text(text),
+      backgroundColor: Colors.red,
+    ));
   }
 }
