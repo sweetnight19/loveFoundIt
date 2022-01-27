@@ -49,6 +49,7 @@ class _SingInFullState extends State<SingInFull> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
                 controller: mailController,
                 decoration: const InputDecoration(
                   hintText: 'Correo electrónico',
@@ -62,6 +63,7 @@ class _SingInFullState extends State<SingInFull> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: TextFormField(
+                keyboardType: TextInputType.visiblePassword,
                 controller: passwordController,
                 obscureText: true,
                 decoration: const InputDecoration(

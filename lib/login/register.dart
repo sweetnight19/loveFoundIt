@@ -108,18 +108,32 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                   const SizedBox(height: 40),
                   textField('Phone Number'),
                   const SizedBox(height: 40),
-                  primaryButton('Registrarse', () {
+                  primaryButton('Registrarse', () async {
                     if (checkPassword(passwordController.text,
                         passwordConfirmController.text, context)) {
-                      registerWithMail(
+                      int result = await registerWithMail(
                           passwordController.text, emailController.text);
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MyApp(),
-                        ),
-                      );
+                      switch (result) {
+                        case 0:
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MyApp(),
+                            ),
+                          );
+                          break;
+                        case 1:
+                          checkRegisterAPI(
+                              "The account already exists for that email",
+                              context);
+
+                          break;
+                        case 2:
+                          checkRegisterAPI(
+                              'The password provided is too weak', context);
+                          break;
+                      }
                     }
                   }),
                 ]))));
@@ -143,5 +157,14 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
       return false;
     }
     return true;
+  }
+
+  void checkRegisterAPI(String text, BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+
+    scaffold.showSnackBar(SnackBar(
+      content: Text(text),
+      backgroundColor: Colors.red,
+    ));
   }
 }

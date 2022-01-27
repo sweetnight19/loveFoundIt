@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<int> signInWithMail(String mail, String password) async {
   try {
@@ -8,6 +9,7 @@ Future<int> signInWithMail(String mail, String password) async {
       password: password,
     );
     print(userCredential);
+    saveUID(userCredential.user!.uid);
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
       return 1;
@@ -18,21 +20,32 @@ Future<int> signInWithMail(String mail, String password) async {
   return 0;
 }
 
-void registerWithMail(String password, String mail) async {
+void saveUID(String uid) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('uid', uid);
+  print("get uid: ${prefs.getString('uid')}");
+}
+
+Future<int> registerWithMail(String password, String mail) async {
   try {
     UserCredential userCredential =
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: mail,
       password: password,
     );
-    sendEmail();
   } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
+    if (e.code == 'weak-password') {
+      print('The password provided is too weak.');
+      return 2;
+    } else if (e.code == 'email-already-in-use') {
+      print('The account already exists for that email.');
+      return 1;
     }
+  } catch (e) {
+    print(e);
   }
+
+  return 0;
 }
 
 void sendEmail() async {
