@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:love_found_it/model/profile.dart';
+
+import 'model/profile.dart';
 
 class ProfilePageFull extends StatefulWidget {
   final String? uuid;
