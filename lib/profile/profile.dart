@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:love_found_it/profile/service/profile.service.dart';
 
 import 'model/profile.dart';
 
@@ -14,11 +15,6 @@ class ProfilePageFull extends StatefulWidget {
 }
 
 class _ProfilePageFullState extends State<ProfilePageFull> {
-  CollectionReference profileCollection =
-      FirebaseFirestore.instance.collection('profile').withConverter<Profile>(
-            fromFirestore: (snapshot, _) => Profile.fromJson(snapshot.data()!),
-            toFirestore: (profile, _) => profile.toJson(),
-          );
 
   final double coverHeight = 300;
   final double profileHeight = 150;
@@ -31,7 +27,7 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
   @override
   void initState() {
     if (widget.uuid != null) {
-      _queryProfile(widget.uuid!);
+      ProfileService.queryProfile(widget.uuid!).then((value) => print(value));
     }
     super.initState();
   }
@@ -141,14 +137,4 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
               InkWell(onTap: () {}, child: Center(child: Icon(icon, size: 32))),
         ),
       );
-
-  Future _queryProfile(String uuid) async {
-    profileCollection.doc(uuid).get().then((profile) {
-      if (profile.exists) {
-        print(profile.data());
-      } else {
-        print('Not exists on the database');
-      }
-    });
-  }
 }
