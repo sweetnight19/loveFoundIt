@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfilePageFull extends StatefulWidget {
-  const ProfilePageFull({Key? key}) : super(key: key);
+  final String? uuid;
+  const ProfilePageFull({this.uuid, Key? key}) : super(key: key);
 
   @override
   _ProfilePageFullState createState() => _ProfilePageFullState();
@@ -20,10 +21,25 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
           iconTheme: const IconThemeData(color: Colors.white),
           elevation: 0,
           backgroundColor: Colors.transparent,
+          actions: [
+            Padding(padding: const EdgeInsets.only(right: 20.0),
+            child: isOwnProfile() ? buildEditButton() : null),
+          ],
         ),
         body: ListView(
             padding: EdgeInsets.zero,
             children: [buildHeader(), buildContent()]));
+  }
+
+  bool isOwnProfile() => widget.uuid != null;
+
+  GestureDetector buildEditButton() {
+    return GestureDetector(
+            onTap: () {
+
+            },
+            child: Icon(Icons.edit),
+          );
   }
 
   Stack buildHeader() {
