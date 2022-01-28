@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,7 +10,6 @@ Future<int> signInWithMail(String mail, String password) async {
       password: password,
     );
     print(userCredential);
-    saveUID(userCredential.user!.uid);
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
       return 1;
@@ -20,19 +20,28 @@ Future<int> signInWithMail(String mail, String password) async {
   return 0;
 }
 
-void saveUID(String uid) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString('uid', uid);
-  print("get uid: ${prefs.getString('uid')}");
-}
-
-Future<int> registerWithMail(String password, String mail) async {
+Future<int> registerWithMail(
+    String password, String mail, String username, String phone) async {
   try {
     UserCredential userCredential =
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: mail,
       password: password,
     );
+
+    FirebaseFirestore.instance
+        .collection('profile')
+        .doc(userCredential.user!.uid)
+        .set({
+      'username': username,
+      'mail': mail,
+      'phone_number': phone,
+      'biography': '',
+      'cover': '',
+      'instagram': '',
+      'photo': '',
+      'twitter': '',
+    });
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
       print('The password provided is too weak.');
@@ -46,15 +55,6 @@ Future<int> registerWithMail(String password, String mail) async {
   }
 
   return 0;
-}
-
-void sendEmail() async {
-  User? user = FirebaseAuth.instance.currentUser;
-
-  if (user != null && !user.emailVerified) {
-    await user.sendEmailVerification();
-    print('Email sent');
-  }
 }
 
 void recoveryWithEmail(String mail) async {

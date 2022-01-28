@@ -1,3 +1,7 @@
+// ignore_for_file: unused_import, unnecessary_const
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:love_found_it/API/api.dart';
 import 'package:love_found_it/main.dart';
@@ -34,6 +38,8 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
   final passwordController = TextEditingController();
   final passwordConfirmController = TextEditingController();
   final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  var usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +57,7 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
         body: Center(
             child: Container(
                 decoration: customBackground(),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: ListView(children: <Widget>[
                   const Text(
                     'Register',
@@ -60,7 +67,7 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   const Text(
                     'Please fill in the form below to register',
                     style: TextStyle(
@@ -68,25 +75,26 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                       fontSize: 20,
                     ),
                   ),
-                  const SizedBox(height: 40),
-                  const TextField(
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      hintText: 'Username',
+                  const SizedBox(height: 50),
+                  TextField(
+                    controller: usernameController,
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      hintText: "Username",
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 10),
                   TextField(
                     controller: passwordController,
                     obscureText: true,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.visiblePassword,
                     decoration: const InputDecoration(
                       hintText: "Password",
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 10),
                   TextField(
                     controller: passwordConfirmController,
                     obscureText: true,
@@ -96,7 +104,7 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 10),
                   TextField(
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -105,17 +113,35 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 40),
-                  textField('Phone Number'),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: phoneController,
+                    keyboardType: TextInputType.phone,
+                    decoration: const InputDecoration(
+                      hintText: "Phone Number",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 50),
                   primaryButton('Registrarse', () async {
                     if (checkPassword(passwordController.text,
                         passwordConfirmController.text, context)) {
                       int result = await registerWithMail(
-                          passwordController.text, emailController.text);
+                          passwordController.text,
+                          emailController.text,
+                          usernameController.text,
+                          phoneController.text);
 
                       switch (result) {
                         case 0:
+                          UserCredential userCredential = await FirebaseAuth
+                              .instance
+                              .signInWithEmailAndPassword(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
+
+                          //navigate to home
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -132,6 +158,8 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                         case 2:
                           checkRegisterAPI(
                               'The password provided is too weak', context);
+                          break;
+                        default:
                           break;
                       }
                     }

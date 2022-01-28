@@ -14,15 +14,17 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
+  //SharedPreferences prefs = await SharedPreferences.getInstance();
   await Firebase.initializeApp();
-
+/*
   //Check if uid is set
   if (prefs.getString("uid") != null) {
     runApp(const MyApp());
   } else {
     runApp(const HomeLess());
   }
+  */
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

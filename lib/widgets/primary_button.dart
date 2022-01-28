@@ -5,6 +5,7 @@ import '../color_constants.dart';
 ElevatedButton primaryButton(text, [callback]) {
   return ElevatedButton(
       style: ButtonStyle(
+          elevation: MaterialStateProperty.all<double>(0),
           padding: MaterialStateProperty.all(
               const EdgeInsets.symmetric(vertical: 20)),
           backgroundColor:
