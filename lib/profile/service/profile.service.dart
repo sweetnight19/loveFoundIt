@@ -3,7 +3,7 @@ import 'package:love_found_it/profile/model/profile.dart';
 
 class ProfileService {
 
-  static final String _collection = 'profile';
+  static const String _collection = 'profile';
 
   static Future<Profile?> queryProfile(String uuid) async {
     return getInstance().doc(uuid).get().then((snapshot) => snapshot.data());
