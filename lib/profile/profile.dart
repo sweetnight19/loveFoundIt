@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:love_found_it/model/profile.dart';
 
 class ProfilePageFull extends StatefulWidget {
   final String? uuid;
+
   const ProfilePageFull({this.uuid, Key? key}) : super(key: key);
 
   @override
@@ -10,8 +13,27 @@ class ProfilePageFull extends StatefulWidget {
 }
 
 class _ProfilePageFullState extends State<ProfilePageFull> {
+  CollectionReference profileCollection =
+      FirebaseFirestore.instance.collection('profile').withConverter<Profile>(
+            fromFirestore: (snapshot, _) => Profile.fromJson(snapshot.data()!),
+            toFirestore: (profile, _) => profile.toJson(),
+          );
+
   final double coverHeight = 300;
   final double profileHeight = 150;
+
+  late Future<DocumentSnapshot<Profile?>> profile;
+
+  // TODO: Replace this with shared preferences
+  bool isOwnProfile() => widget.uuid != null;
+
+  @override
+  void initState() {
+    if (widget.uuid != null) {
+      _queryProfile(widget.uuid!);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +44,9 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           actions: [
-            Padding(padding: const EdgeInsets.only(right: 20.0),
-            child: isOwnProfile() ? buildEditButton() : null),
+            Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: isOwnProfile() ? buildEditButton() : null),
           ],
         ),
         body: ListView(
@@ -31,15 +54,11 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
             children: [buildHeader(), buildContent()]));
   }
 
-  bool isOwnProfile() => widget.uuid != null;
-
   GestureDetector buildEditButton() {
     return GestureDetector(
-            onTap: () {
-
-            },
-            child: Icon(Icons.edit),
-          );
+      onTap: () {},
+      child: const Icon(Icons.edit),
+    );
   }
 
   Stack buildHeader() {
@@ -58,8 +77,7 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
     );
   }
 
-  Widget buildCoverImage() =>
-      Container(
+  Widget buildCoverImage() => Container(
         color: Colors.grey,
         child: Image.network(
             "https://pbs.twimg.com/profile_banners/470216542/1415177925/1500x500",
@@ -68,8 +86,7 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
             fit: BoxFit.cover),
       );
 
-  Widget buildProfileImage() =>
-      CircleAvatar(
+  Widget buildProfileImage() => CircleAvatar(
         radius: profileHeight / 2,
         backgroundColor: Colors.grey.shade800,
         backgroundImage: const NetworkImage(
@@ -77,8 +94,7 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
         ),
       );
 
-  Widget buildContent() =>
-      Column(
+  Widget buildContent() => Column(
         children: [
           const SizedBox(height: 8),
           const Text("Arnau Garcia",
@@ -104,7 +120,7 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
               children: const [
                 Text("About",
                     style:
-                    TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
                 SizedBox(height: 16),
                 Text(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus aliquam laoreet justo, non semper erat pretium id. Nam id odio ut urna gravida hendrerit. Aliquam pharetra rutrum tellus, quis tincidunt odio tincidunt quis. Curabitur ultrices lobortis aliquam.",
@@ -115,15 +131,23 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
         ],
       );
 
-  buildSocialIcon(IconData icon) =>
-      CircleAvatar(
+  buildSocialIcon(IconData icon) => CircleAvatar(
         radius: 25,
         child: Material(
           shape: const CircleBorder(),
           color: Colors.transparent,
-          child: InkWell(
-              onTap: () {},
-              child: Center(child: Icon(icon, size: 32))),
+          child:
+              InkWell(onTap: () {}, child: Center(child: Icon(icon, size: 32))),
         ),
       );
+
+  Future _queryProfile(String uuid) async {
+    profileCollection.doc(uuid).get().then((profile) {
+      if (profile.exists) {
+        print(profile.data());
+      } else {
+        print('Not exists on the database');
+      }
+    });
+  }
 }
