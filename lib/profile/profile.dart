@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:love_found_it/profile/service/profile.service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'model/profile.dart';
 
@@ -33,11 +34,12 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
                   content: Text("Error profile not found"),
                 ))
               }
-            else {
-              setState(() {
-                profile = value;
-              })
-            }
+            else
+              {
+                setState(() {
+                  profile = value;
+                })
+              }
           });
     }
   }
@@ -99,7 +101,9 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
         radius: profileHeight / 2,
         backgroundColor: Colors.grey.shade800,
         backgroundImage: NetworkImage(
-          profile.photo != null ? profile.photo! : "https://dummyimage.com/600x400/fff/fff&text=+",
+          profile.photo != null
+              ? profile.photo!
+              : "https://dummyimage.com/600x400/fff/fff&text=+",
         ),
       );
 
@@ -113,11 +117,20 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
                   color: Colors.black)),
           const SizedBox(height: 16),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            buildSocialIcon(FontAwesomeIcons.linkedinIn),
+            profile.instagram != null
+                ? buildSocialIcon(
+                    FontAwesomeIcons.instagram, profile.instagram!)
+                : null,
             const SizedBox(width: 12),
-            buildSocialIcon(FontAwesomeIcons.instagram),
+            /*profile.twitter != null
+                ? buildSocialIcon(
+                FontAwesomeIcons.twitter, profile.twitter!)
+                : null,*/
             const SizedBox(width: 12),
-            buildSocialIcon(FontAwesomeIcons.twitter),
+            profile.phoneNumber != null
+                ? buildSocialIcon(
+                FontAwesomeIcons.phone, "tel:" + profile.phoneNumber!)
+                : null,
             const SizedBox(width: 12)
           ]),
           const Divider(),
@@ -131,7 +144,10 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
                     style:
                         TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 16),
-                Text(profile.biography != null ? profile.biography! : "Loading...",
+                Text(
+                    profile.biography != null
+                        ? profile.biography!
+                        : "Loading...",
                     style: const TextStyle(fontSize: 16, color: Colors.black))
               ],
             ),
@@ -139,13 +155,20 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
         ],
       );
 
-  buildSocialIcon(IconData icon) => CircleAvatar(
+  buildSocialIcon(IconData icon, String link) => CircleAvatar(
         radius: 25,
         child: Material(
           shape: const CircleBorder(),
           color: Colors.transparent,
-          child:
-              InkWell(onTap: () {}, child: Center(child: Icon(icon, size: 32))),
+          child: InkWell(
+              onTap: () {
+                _launchURL(link);
+              },
+              child: Center(child: Icon(icon, size: 32))),
         ),
       );
+
+  void _launchURL(url) async {
+    if (!await launch(url)) throw 'Could not launch $url';
+  }
 }
