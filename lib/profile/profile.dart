@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfilePageFull extends StatefulWidget {
   const ProfilePageFull({Key? key}) : super(key: key);
@@ -41,7 +42,8 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
     );
   }
 
-  Widget buildCoverImage() => Container(
+  Widget buildCoverImage() =>
+      Container(
         color: Colors.grey,
         child: Image.network(
             "https://pbs.twimg.com/profile_banners/470216542/1415177925/1500x500",
@@ -50,7 +52,8 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
             fit: BoxFit.cover),
       );
 
-  Widget buildProfileImage() => CircleAvatar(
+  Widget buildProfileImage() =>
+      CircleAvatar(
         radius: profileHeight / 2,
         backgroundColor: Colors.grey.shade800,
         backgroundImage: const NetworkImage(
@@ -58,7 +61,8 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
         ),
       );
 
-  Widget buildContent() => Column(
+  Widget buildContent() =>
+      Column(
         children: [
           const SizedBox(height: 8),
           const Text("Arnau Garcia",
@@ -66,6 +70,15 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   color: Colors.black)),
+          const SizedBox(height: 16),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            buildSocialIcon(FontAwesomeIcons.linkedinIn),
+            const SizedBox(width: 12),
+            buildSocialIcon(FontAwesomeIcons.instagram),
+            const SizedBox(width: 12),
+            buildSocialIcon(FontAwesomeIcons.twitter),
+            const SizedBox(width: 12)
+          ]),
           const Divider(),
           const SizedBox(height: 16),
           Container(
@@ -73,7 +86,9 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
-                Text("About", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+                Text("About",
+                    style:
+                    TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
                 SizedBox(height: 16),
                 Text(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus aliquam laoreet justo, non semper erat pretium id. Nam id odio ut urna gravida hendrerit. Aliquam pharetra rutrum tellus, quis tincidunt odio tincidunt quis. Curabitur ultrices lobortis aliquam.",
@@ -82,5 +97,17 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
             ),
           )
         ],
+      );
+
+  buildSocialIcon(IconData icon) =>
+      CircleAvatar(
+        radius: 25,
+        child: Material(
+          shape: const CircleBorder(),
+          color: Colors.transparent,
+          child: InkWell(
+              onTap: () {},
+              child: Center(child: Icon(icon, size: 32))),
+        ),
       );
 }
