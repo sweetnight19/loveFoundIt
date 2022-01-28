@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:love_found_it/profile/service/profile.service.dart';
@@ -15,21 +14,32 @@ class ProfilePageFull extends StatefulWidget {
 }
 
 class _ProfilePageFullState extends State<ProfilePageFull> {
-
   final double coverHeight = 300;
   final double profileHeight = 150;
 
-  late Future<DocumentSnapshot<Profile?>> profile;
+  Profile profile = Profile();
 
   // TODO: Replace this with shared preferences
   bool isOwnProfile() => widget.uuid != null;
 
   @override
   void initState() {
-    if (widget.uuid != null) {
-      ProfileService.queryProfile(widget.uuid!).then((value) => print(value));
-    }
     super.initState();
+    if (widget.uuid != null) {
+      ProfileService.queryProfile(widget.uuid!).then((value) => {
+            if (value == null)
+              {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Error profile not found"),
+                ))
+              }
+            else {
+              setState(() {
+                profile = value;
+              })
+            }
+          });
+    }
   }
 
   @override
@@ -77,7 +87,9 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
   Widget buildCoverImage() => Container(
         color: Colors.grey,
         child: Image.network(
-            "https://pbs.twimg.com/profile_banners/470216542/1415177925/1500x500",
+            profile.cover != null
+                ? profile.cover!
+                : "https://dummyimage.com/600x400/000/fff&text=+",
             width: double.infinity,
             height: coverHeight,
             fit: BoxFit.cover),
@@ -86,16 +98,16 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
   Widget buildProfileImage() => CircleAvatar(
         radius: profileHeight / 2,
         backgroundColor: Colors.grey.shade800,
-        backgroundImage: const NetworkImage(
-          "https://pbs.twimg.com/profile_images/1192158313858969600/rX1SBLkC_400x400.jpg",
+        backgroundImage: NetworkImage(
+          profile.photo != null ? profile.photo! : "https://dummyimage.com/600x400/fff/fff&text=+",
         ),
       );
 
   Widget buildContent() => Column(
         children: [
           const SizedBox(height: 8),
-          const Text("Arnau Garcia",
-              style: TextStyle(
+          Text(profile.name != null ? profile.name! : "Loading...",
+              style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   color: Colors.black)),
@@ -114,14 +126,13 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
             padding: const EdgeInsets.symmetric(horizontal: 48),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text("About",
+              children: [
+                const Text("About",
                     style:
                         TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-                SizedBox(height: 16),
-                Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus aliquam laoreet justo, non semper erat pretium id. Nam id odio ut urna gravida hendrerit. Aliquam pharetra rutrum tellus, quis tincidunt odio tincidunt quis. Curabitur ultrices lobortis aliquam.",
-                    style: TextStyle(fontSize: 16, color: Colors.black))
+                const SizedBox(height: 16),
+                Text(profile.biography != null ? profile.biography! : "Loading...",
+                    style: const TextStyle(fontSize: 16, color: Colors.black))
               ],
             ),
           )
