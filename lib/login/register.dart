@@ -47,11 +47,6 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const MyApp())),
-          ),
           backgroundColor: Colors.transparent,
         ),
         body: Center(

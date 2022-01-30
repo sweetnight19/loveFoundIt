@@ -42,20 +42,11 @@ class _HomeFullState extends State<HomeFull> {
         elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
-        actions: <Widget>[
-          Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.blue,
-                ),
-              )),
-        ],
       ),
       body: _paginas[_paginaActual],
       bottomNavigationBar: BottomNavigationBar(
+          elevation: 0,
+          selectedItemColor: Colors.pink[500],
           onTap: (value) {
             setState(() {
               _paginaActual = value;
@@ -63,7 +54,10 @@ class _HomeFullState extends State<HomeFull> {
           },
           currentIndex: _paginaActual,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+                backgroundColor: Colors.pink),
             BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle_rounded), label: 'Profile'),
           ]),
