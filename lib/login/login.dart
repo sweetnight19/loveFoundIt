@@ -64,7 +64,33 @@ class _LoginPageFullState extends State<LoginPageFull> {
                           child: SignInButton(
                               buttonType: ButtonType.google,
                               onPressed: () async {
-                                await signInWithGoogle();
+                                var aux = await signInWithGoogle();
+
+                                //check if user is already in database
+                                var user = await FirebaseFirestore.instance
+                                    .collection('profile')
+                                    .doc(aux.user!.uid)
+                                    .get();
+
+                                if (!user.exists) {
+                                  FirebaseFirestore.instance
+                                      .collection('profile')
+                                      .doc(aux.user!.uid)
+                                      .set({
+                                    'username': aux.user!.displayName,
+                                    'name': aux.user!.displayName,
+                                    'mail': aux.user!.email,
+                                    'phone_number': "",
+                                    'gender': "",
+                                    'biography': '',
+                                    'cover': '',
+                                    'instagram': '',
+                                    'photo': '',
+                                    'twitter': '',
+                                    'friends': [],
+                                  });
+                                }
+
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

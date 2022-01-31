@@ -6,9 +6,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'model/profile.dart';
 
 class ProfilePageFull extends StatefulWidget {
-  final String? uuid;
+  String? uuid;
 
-  const ProfilePageFull({this.uuid, Key? key}) : super(key: key);
+  ProfilePageFull({this.uuid, Key? key}) : super(key: key);
 
   @override
   _ProfilePageFullState createState() => _ProfilePageFullState();

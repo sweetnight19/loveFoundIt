@@ -15,7 +15,6 @@ class _ListFullState extends State<ListFull> {
       FirebaseFirestore.instance.collection('profile').snapshots();
 
   String uid = FirebaseAuth.instance.currentUser!.uid;
-  late List<String> list;
 
   @override
   void initState() {
@@ -24,8 +23,12 @@ class _ListFullState extends State<ListFull> {
   }
 
   void getFriends() async {
-    QuerySnapshot profile =
-        await FirebaseFirestore.instance.collection("profile").get();
+    Stream documentStream =
+        FirebaseFirestore.instance.collection('profile').doc(uid).snapshots();
+
+    documentStream.listen((data) {
+      print("teeest: " + data.data()["friends"][0].toString());
+    });
 
 /*
     if (profile.docs.isNotEmpty) {
