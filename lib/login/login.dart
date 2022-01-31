@@ -77,6 +77,7 @@ class _LoginPageFullState extends State<LoginPageFull> {
                                       .collection('profile')
                                       .doc(aux.user!.uid)
                                       .set({
+                                    'uid': aux.user!.uid,
                                     'username': aux.user!.displayName,
                                     'name': aux.user!.displayName,
                                     'mail': aux.user!.email,

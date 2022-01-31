@@ -30,6 +30,7 @@ Future<int> registerWithMail(String password, String mail, String username,
         .collection('profile')
         .doc(userCredential.user!.uid)
         .set({
+      'uid': userCredential.user!.uid,
       'username': username,
       'mail': mail,
       'phone_number': phone,
