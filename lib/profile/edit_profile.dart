@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:love_found_it/widgets/primary_button.dart';
 import 'package:path/path.dart' as path;
 
 class EditProfilePageFull extends StatefulWidget {
@@ -17,10 +18,14 @@ class EditProfilePageFull extends StatefulWidget {
 }
 
 class _EditProfilePageFullState extends State<EditProfilePageFull> {
-
   FirebaseStorage storage = FirebaseStorage.instance;
+  String radioButtonItem = 'M';
 
-  // Select and image from the gallery or take a picture with the camera
+
+  @override
+  void initState() {
+
+  } // Select and image from the gallery or take a picture with the camera
   // Then upload to Firebase Storage
   Future<void> _upload(String inputSource) async {
     final picker = ImagePicker();
@@ -74,7 +79,7 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
         "path": file.fullPath,
         "uploaded_by": fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
         "description":
-        fileMeta.customMetadata?['description'] ?? 'No description'
+            fileMeta.customMetadata?['description'] ?? 'No description'
       });
     });
 
@@ -93,7 +98,17 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Kindacode.com'),
+        centerTitle: true,
+        title: const Text(
+          'EDIT PROFILE',
+          style: TextStyle(
+            fontSize: 30,
+            color: Colors.black,
+          ),
+        ),
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -112,43 +127,89 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
                     label: const Text('Gallery')),
               ],
             ),
-            Expanded(
-              child: FutureBuilder(
-                future: _loadImages(),
-                builder: (context,
-                    AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return ListView.builder(
-                      itemCount: snapshot.data?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        final Map<String, dynamic> image =
-                        snapshot.data![index];
-
-                        return Card(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          child: ListTile(
-                            dense: false,
-                            leading: Image.network(image['url']),
-                            title: Text(image['uploaded_by']),
-                            subtitle: Text(image['description']),
-                            trailing: IconButton(
-                              onPressed: () => _delete(image['path']),
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ),
-                        );
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter name',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter biography',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter phone number',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter phone twitter',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter phone instagram',
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Radio(
+                      value: 1,
+                      groupValue: 1,
+                      onChanged: (val) {
+                        setState(() {
+                          radioButtonItem = 'M';
+                        });
                       },
-                    );
-                  }
-
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              ),
+                    ),
+                    const Text(
+                      'HOMBRE',
+                    ),
+                    Radio(
+                      value: 2,
+                      groupValue: 1,
+                      onChanged: (val) {
+                        setState(() {
+                          radioButtonItem = 'F';
+                        });
+                      },
+                    ),
+                    const Text(
+                      'MUJER',
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(child: primaryButton('Update profile'))
+                  ],
+                )
+              ],
             ),
           ],
         ),
