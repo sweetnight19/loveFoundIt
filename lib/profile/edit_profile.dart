@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +23,6 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
   FirebaseStorage storage = FirebaseStorage.instance;
   String radioButtonItem = 'M';
 
-
-  @override
-  void initState() {
-
-  } // Select and image from the gallery or take a picture with the camera
   // Then upload to Firebase Storage
   Future<void> _upload(String inputSource) async {
     final picker = ImagePicker();
@@ -49,6 +46,8 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
               'description': 'Some description...'
             }));
 
+        FirebaseFirestore.instance.collection('profile').doc(FirebaseAuth.instance.currentUser!.uid).update({'photo': await storage.ref(fileName).getDownloadURL()});
+
         // Refresh the UI
         setState(() {});
       } on FirebaseException catch (error) {
@@ -61,37 +60,6 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
         print(err);
       }
     }
-  }
-
-  // Retriew the uploaded images
-  // This function is called when the app launches for the first time or when an image is uploaded or deleted
-  Future<List<Map<String, dynamic>>> _loadImages() async {
-    List<Map<String, dynamic>> files = [];
-
-    final ListResult result = await storage.ref().list();
-    final List<Reference> allFiles = result.items;
-
-    await Future.forEach<Reference>(allFiles, (file) async {
-      final String fileUrl = await file.getDownloadURL();
-      final FullMetadata fileMeta = await file.getMetadata();
-      files.add({
-        "url": fileUrl,
-        "path": file.fullPath,
-        "uploaded_by": fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
-        "description":
-            fileMeta.customMetadata?['description'] ?? 'No description'
-      });
-    });
-
-    return files;
-  }
-
-  // Delete the selected image
-  // This function is called when a trash icon is pressed
-  Future<void> _delete(String ref) async {
-    await storage.ref(ref).delete();
-    // Rebuild the UI
-    setState(() {});
   }
 
   @override
