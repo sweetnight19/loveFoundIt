@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:love_found_it/home/add_friends.dart';
+import 'package:love_found_it/profile/profile.dart';
+import 'package:path/path.dart';
 
 class ListFull extends StatefulWidget {
   const ListFull({Key? key}) : super(key: key);
@@ -15,6 +17,7 @@ class _ListFullState extends State<ListFull> {
       FirebaseFirestore.instance.collection('profile').snapshots();
 
   String uid = FirebaseAuth.instance.currentUser!.uid;
+  List<dynamic> friends = [];
 
   @override
   void initState() {
@@ -27,31 +30,8 @@ class _ListFullState extends State<ListFull> {
         FirebaseFirestore.instance.collection('profile').doc(uid).snapshots();
 
     documentStream.listen((data) {
-      print("teeest: " + data.data()["friends"][0].toString());
+      friends = data.data()["friends"];
     });
-
-/*
-    if (profile.docs.isNotEmpty) {
-      for (var id in profile.docs) {
-        try {
-          for (var friend in id["friends"]) {
-            print("friends: " + friend);
-            print("profile: " + profile.docs.
-            print(id["username"] +
-                " tiene como amigo: " +
-                profile.docs[friend].get("username"));
-          }
-        } catch (e) {
-          print(e);
-        }
-      }
-    }
-    */
-    /*
-    FirebaseFirestore.instance.collection('users').doc(uid).get().then((value) {
-      list = value.get("friends");
-    });
-    */
   }
 
   @override
@@ -88,26 +68,61 @@ class _ListFullState extends State<ListFull> {
                       snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
-                if (data['gender'] == 'M') {
-                  return ListTile(
-                    leading: const Icon(
-                      Icons.male_rounded,
-                      color: Colors.blue,
-                    ),
-                    trailing: const Icon(Icons.assignment_ind_rounded),
-                    title: Text(data['username']),
-                    subtitle: Text(data['mail']),
-                  );
+
+                if (friends.contains(data["uid"].toString())) {
+                  if (data['gender'] == 'M') {
+                    return ListTile(
+                      leading: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: Image.network(data["photo"]).image)),
+                      ),
+                      trailing: const Icon(Icons.assignment_ind_rounded),
+                      title: Text(data['username']),
+                      subtitle: Text(data['mail']),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfilePageFull(
+                              uuid: data['uid'].toString(),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return ListTile(
+                      leading: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: Image.network(data["photo"]).image)),
+                      ),
+                      trailing: const Icon(Icons.assignment_ind_rounded),
+                      title: Text(data['username']),
+                      subtitle: Text(data['mail']),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfilePageFull(
+                              uuid: data['uid'].toString(),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
                 } else {
-                  return ListTile(
-                    leading: const Icon(
-                      Icons.female_rounded,
-                      color: Colors.pink,
-                    ),
-                    trailing: const Icon(Icons.assignment_ind_rounded),
-                    title: Text(data['username']),
-                    subtitle: Text(data['mail']),
-                  );
+                  return Container();
                 }
               }).toList());
             }),
