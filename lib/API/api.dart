@@ -39,6 +39,9 @@ Future<int> registerWithMail(String password, String mail, String username,
       'instagram': '',
       'photo': '',
       'twitter': '',
+      'cover':
+          "https://www.elcampico.org/wp-content/uploads/2016/04/dummy-post-horisontal.jpg",
+      'name': username,
     });
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {

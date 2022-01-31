@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:love_found_it/home/list_friends.dart';
 import 'package:love_found_it/profile/profile.dart';
@@ -11,11 +12,12 @@ class HomeFull extends StatefulWidget {
 
 class _HomeFullState extends State<HomeFull> {
   int _paginaActual = 0;
+  //String uid = FirebaseAuth.instance.currentUser!.uid;
 
   final List<Widget> _paginas = [
     const ListFull(),
-    const ProfilePageFull(
-      uuid: "8NGvV65Z3TMv6y0xLa512tiOtm53",
+    ProfilePageFull(
+      uuid: FirebaseAuth.instance.currentUser!.uid,
     )
   ];
 

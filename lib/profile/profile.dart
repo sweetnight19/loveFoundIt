@@ -8,9 +8,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'model/profile.dart';
 
 class ProfilePageFull extends StatefulWidget {
-  final String? uuid;
+  String? uuid;
 
-  const ProfilePageFull({this.uuid, Key? key}) : super(key: key);
+  ProfilePageFull({this.uuid, Key? key}) : super(key: key);
 
   @override
   _ProfilePageFullState createState() => _ProfilePageFullState();
@@ -21,8 +21,6 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
   final double profileHeight = 150;
   String? currentUserUid;
   Profile profile = Profile();
-
-  // TODO: Replace this with shared preferences
   bool isOwnProfile = false;
 
   @override
@@ -31,7 +29,9 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
     if (FirebaseAuth.instance.currentUser != null) {
       currentUserUid = FirebaseAuth.instance.currentUser!.uid;
 
-      if (currentUserUid != null && widget.uuid!= null && currentUserUid == widget.uuid) {
+      if (currentUserUid != null &&
+          widget.uuid != null &&
+          currentUserUid == widget.uuid) {
         isOwnProfile = true;
       }
     }
@@ -59,16 +59,13 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            'PERFIL',
-            style: TextStyle(
-              fontSize: 30,
-              color: Colors.black,
-            ),
-          ),
           iconTheme: const IconThemeData(color: Colors.white),
-          automaticallyImplyLeading: false,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
           elevation: 0,
           backgroundColor: Colors.transparent,
           actions: [
@@ -88,7 +85,8 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const EditProfilePageFull(uuid: '8NGvV65Z3TMv6y0xLa512tiOtm53'),
+            builder: (context) =>
+                const EditProfilePageFull(uuid: '8NGvV65Z3TMv6y0xLa512tiOtm53'),
           ),
         );
       },
@@ -136,7 +134,7 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
   Widget buildContent() => Column(
         children: [
           const SizedBox(height: 8),
-          Text(profile.name != null ? profile.name! : "Loading...",
+          Text(profile.name != null ? profile.name! : "Cargando...",
               style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -157,14 +155,14 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("About",
+                const Text("Acerca de mi",
                     style:
                         TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 16),
                 Text(
                     profile.biography != null
                         ? profile.biography!
-                        : "Loading...",
+                        : "Cargando...",
                     style: const TextStyle(fontSize: 16, color: Colors.black))
               ],
             ),

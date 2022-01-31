@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:love_found_it/custom_widget.dart';
 import 'package:love_found_it/login/recovery.dart';
-import 'package:love_found_it/profile/profile.dart';
 import 'package:love_found_it/widgets/primary_button.dart';
 
 import 'login/login.dart';

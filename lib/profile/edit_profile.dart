@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:love_found_it/widgets/primary_button.dart';
 import 'package:path/path.dart' as path;
@@ -92,7 +91,7 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'EDIT PROFILE',
+          'EDITAR PERFIL',
           style: TextStyle(
             fontSize: 30,
             color: Colors.black,
@@ -102,129 +101,140 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
               children: [
-                ElevatedButton.icon(
-                    onPressed: () => _upload('camera'),
-                    icon: const Icon(Icons.camera),
-                    label: const Text('camera')),
-                ElevatedButton.icon(
-                    onPressed: () => _upload('gallery'),
-                    icon: const Icon(Icons.library_add),
-                    label: const Text('Gallery')),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                  child: TextField(
-                    controller: nameController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter name',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                  child: TextField(
-                    controller: biographyController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter biography',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                  child: TextField(
-                    controller: phoneController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter phone number',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                  child: TextField(
-                    controller: twitterController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter the twitter',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                  child: TextField(
-                    controller: instagramController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter instagram',
-                    ),
-                  ),
-                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Radio(
-                      value: 1,
-                      groupValue: 1,
-                      onChanged: (val) {
-                        setState(() {
-                          radioButtonItem = 'M';
-                        });
-                      },
-                    ),
-                    const Text(
-                      'HOMBRE',
-                    ),
-                    Radio(
-                      value: 2,
-                      groupValue: 1,
-                      onChanged: (val) {
-                        setState(() {
-                          radioButtonItem = 'F';
-                        });
-                      },
-                    ),
-                    const Text(
-                      'MUJER',
-                    ),
-                  ],
-                ),
-                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Expanded(
-                        child: primaryButton(
-                            'Update profile',
-                            () => {
-                                  FirebaseFirestore.instance
-                                      .collection('profile')
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser!.uid)
-                                      .update({
-                                    'name': nameController.text,
-                                    'biography': biographyController.text,
-                                    'phone': phoneController.text,
-                                    'instagram': instagramController.text,
-                                    'twitter': twitterController.text
-                                  })
-                                }))
+                    ElevatedButton.icon(
+                        onPressed: () => _upload('camera'),
+                        icon: const Icon(Icons.camera),
+                        label: const Text('camera')),
+                    ElevatedButton.icon(
+                        onPressed: () => _upload('gallery'),
+                        icon: const Icon(Icons.library_add),
+                        label: const Text('Gallery')),
                   ],
-                )
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 16),
+                      child: TextField(
+                        controller: nameController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Introduce el nombre',
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 16),
+                      child: TextField(
+                        controller: biographyController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Introduce la biografia',
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 16),
+                      child: TextField(
+                        controller: phoneController,
+                        keyboardType: TextInputType.phone,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Introduce el número de teléfono',
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 16),
+                      child: TextField(
+                        controller: twitterController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Introduce tu cuenta de twitter',
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 16),
+                      child: TextField(
+                        controller: instagramController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Introduce tu cuenta de instagram',
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Radio(
+                          value: 1,
+                          groupValue: 1,
+                          onChanged: (val) {
+                            setState(() {
+                              radioButtonItem = 'M';
+                            });
+                          },
+                        ),
+                        const Text(
+                          'HOMBRE',
+                        ),
+                        Radio(
+                          value: 2,
+                          groupValue: 1,
+                          onChanged: (val) {
+                            setState(() {
+                              radioButtonItem = 'F';
+                            });
+                          },
+                        ),
+                        const Text(
+                          'MUJER',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: primaryButton(
+                                'Update profile',
+                                () => {
+                                      FirebaseFirestore.instance
+                                          .collection('profile')
+                                          .doc(FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                          .update({
+                                        'name': nameController.text,
+                                        'biography': biographyController.text,
+                                        'phone': phoneController.text,
+                                        'instagram': instagramController.text,
+                                        'twitter': twitterController.text
+                                      }),
+                                      Navigator.pop(context)
+                                    }))
+                      ],
+                    )
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
