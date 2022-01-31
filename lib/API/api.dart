@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-signInWithMail(String mail, String password) async {
+Future<int> signInWithMail(String mail, String password) async {
   try {
     UserCredential userCredential =
         await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -10,14 +10,15 @@ signInWithMail(String mail, String password) async {
     print(userCredential);
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
-      print('No user found for that email.');
+      return 1;
     } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
+      return 2;
     }
   }
+  return 0;
 }
 
-registerWithMail(String password, String mail) async {
+void registerWithMail(String password, String mail) async {
   try {
     UserCredential userCredential =
         await FirebaseAuth.instance.createUserWithEmailAndPassword(

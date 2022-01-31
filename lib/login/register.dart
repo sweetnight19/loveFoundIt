@@ -42,9 +42,9 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
         appBar: AppBar(
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MyApp())),
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const MyApp())),
           ),
           backgroundColor: Colors.transparent,
         ),
@@ -123,10 +123,6 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                     }
                   }),
                 ]))));
-  }
-
-  void onRegister() {
-    print('heyeyyeey');
   }
 
   bool checkPassword(String text, String text2, BuildContext context) {
