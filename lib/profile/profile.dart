@@ -1,14 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:love_found_it/profile/edit_profile.dart';
 import 'package:love_found_it/profile/service/profile.service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'model/profile.dart';
 
 class ProfilePageFull extends StatefulWidget {
-  final String? uuid;
+  String? uuid;
 
-  const ProfilePageFull({this.uuid, Key? key}) : super(key: key);
+  ProfilePageFull({this.uuid, Key? key}) : super(key: key);
 
   @override
   _ProfilePageFullState createState() => _ProfilePageFullState();
@@ -17,15 +19,23 @@ class ProfilePageFull extends StatefulWidget {
 class _ProfilePageFullState extends State<ProfilePageFull> {
   final double coverHeight = 300;
   final double profileHeight = 150;
-
+  String? currentUserUid;
   Profile profile = Profile();
-
-  // TODO: Replace this with shared preferences
-  bool isOwnProfile() => widget.uuid != null;
+  bool isOwnProfile = false;
 
   @override
   void initState() {
     super.initState();
+    if (FirebaseAuth.instance.currentUser != null) {
+      currentUserUid = FirebaseAuth.instance.currentUser!.uid;
+
+      if (currentUserUid != null &&
+          widget.uuid != null &&
+          currentUserUid == widget.uuid) {
+        isOwnProfile = true;
+      }
+    }
+
     if (widget.uuid != null) {
       ProfileService.queryProfile(widget.uuid!).then((value) => {
             if (value == null)
@@ -49,22 +59,19 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            'PERFIL',
-            style: TextStyle(
-              fontSize: 30,
-              color: Colors.black,
-            ),
-          ),
           iconTheme: const IconThemeData(color: Colors.white),
-          automaticallyImplyLeading: false,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
           elevation: 0,
           backgroundColor: Colors.transparent,
           actions: [
             Padding(
                 padding: const EdgeInsets.only(right: 20.0),
-                child: isOwnProfile() ? buildEditButton() : null),
+                child: isOwnProfile ? buildEditButton() : null),
           ],
         ),
         body: ListView(
@@ -74,7 +81,15 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
 
   GestureDetector buildEditButton() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                const EditProfilePageFull(uuid: '8NGvV65Z3TMv6y0xLa512tiOtm53'),
+          ),
+        );
+      },
       child: const Icon(Icons.edit),
     );
   }
@@ -119,7 +134,7 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
   Widget buildContent() => Column(
         children: [
           const SizedBox(height: 8),
-          Text(profile.name != null ? profile.name! : "Loading...",
+          Text(profile.name != null ? profile.name! : "Cargando...",
               style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -140,14 +155,14 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("About",
+                const Text("Acerca de mi",
                     style:
                         TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 16),
                 Text(
                     profile.biography != null
                         ? profile.biography!
-                        : "Loading...",
+                        : "Cargando...",
                     style: const TextStyle(fontSize: 16, color: Colors.black))
               ],
             ),
