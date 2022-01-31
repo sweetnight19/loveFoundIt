@@ -117,20 +117,11 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
                   color: Colors.black)),
           const SizedBox(height: 16),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            profile.instagram != null
-                ? buildSocialIcon(
-                    FontAwesomeIcons.instagram, profile.instagram!)
-                : null,
+            buildSocialIcon(FontAwesomeIcons.instagram, profile.instagram),
             const SizedBox(width: 12),
-            /*profile.twitter != null
-                ? buildSocialIcon(
-                FontAwesomeIcons.twitter, profile.twitter!)
-                : null,*/
+            buildSocialIcon(FontAwesomeIcons.twitter, profile.twitter),
             const SizedBox(width: 12),
-            profile.phoneNumber != null
-                ? buildSocialIcon(
-                FontAwesomeIcons.phone, "tel:" + profile.phoneNumber!)
-                : null,
+            buildPhoneIcon(profile.phoneNumber),
             const SizedBox(width: 12)
           ]),
           const Divider(),
@@ -155,18 +146,28 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
         ],
       );
 
-  buildSocialIcon(IconData icon, String link) => CircleAvatar(
+  Widget buildSocialIcon(IconData icon, String? link) => CircleAvatar(
         radius: 25,
         child: Material(
           shape: const CircleBorder(),
           color: Colors.transparent,
           child: InkWell(
               onTap: () {
-                _launchURL(link);
+                if (link != null) {
+                  _launchURL(link);
+                }
               },
               child: Center(child: Icon(icon, size: 32))),
         ),
       );
+
+  Widget buildPhoneIcon(String? link) {
+    if (link != null) {
+      return buildSocialIcon(FontAwesomeIcons.phone, link);
+    } else {
+      return buildSocialIcon(FontAwesomeIcons.phone, "");
+    }
+  }
 
   void _launchURL(url) async {
     if (!await launch(url)) throw 'Could not launch $url';
