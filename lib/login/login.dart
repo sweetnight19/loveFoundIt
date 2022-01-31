@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:love_found_it/home/home.dart';
 import 'package:love_found_it/login/sign_with_mail.dart';
 import 'package:sign_button/sign_button.dart';
 
@@ -61,8 +63,14 @@ class _LoginPageFullState extends State<LoginPageFull> {
                           padding: const EdgeInsets.symmetric(horizontal: 60),
                           child: SignInButton(
                               buttonType: ButtonType.google,
-                              onPressed: () {
-                                signInWithGoogle();
+                              onPressed: () async {
+                                await signInWithGoogle();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const HomeFull(),
+                                  ),
+                                );
                               })),
                     ),
                   ],

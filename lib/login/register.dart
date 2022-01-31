@@ -1,3 +1,7 @@
+// ignore_for_file: unused_import, unnecessary_const
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:love_found_it/API/api.dart';
 import 'package:love_found_it/main.dart';
@@ -34,92 +38,182 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
   final passwordController = TextEditingController();
   final passwordConfirmController = TextEditingController();
   final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  var usernameController = TextEditingController();
+  String radioButtonItem = 'M';
+  int id = 1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const MyApp())),
+          centerTitle: true,
+          title: const Text(
+            'REGISTRO',
+            style: TextStyle(
+              fontSize: 30,
+              color: Colors.black,
+            ),
           ),
+          elevation: 0,
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
         ),
         body: Center(
             child: Container(
                 decoration: customBackground(),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: ListView(children: <Widget>[
+                  const SizedBox(height: 50),
                   const Text(
-                    'Register',
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Please fill in the form below to register',
+                    'Por favor complete el siguiente formulario para registrarse',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                     ),
                   ),
-                  const SizedBox(height: 40),
-                  const TextField(
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      hintText: 'Username',
+                  const SizedBox(height: 30),
+                  TextField(
+                    controller: usernameController,
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: "Username",
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 10),
                   TextField(
                     controller: passwordController,
                     obscureText: true,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.visiblePassword,
                     decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
                       hintText: "Password",
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 10),
                   TextField(
                     controller: passwordConfirmController,
                     obscureText: true,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
-                      hintText: "Confirm Password",
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: "Confirmar Password",
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 10),
                   TextField(
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
                       hintText: "Email",
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 40),
-                  textField('Phone Number'),
-                  const SizedBox(height: 40),
-                  primaryButton('Registrarse', () {
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: phoneController,
+                    keyboardType: TextInputType.phone,
+                    decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: "Número de teléfono",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Radio(
+                        value: 1,
+                        groupValue: id,
+                        onChanged: (val) {
+                          setState(() {
+                            radioButtonItem = 'M';
+                            id = 1;
+                          });
+                        },
+                      ),
+                      const Text(
+                        'HOMBRE',
+                      ),
+                      Radio(
+                        value: 2,
+                        groupValue: id,
+                        onChanged: (val) {
+                          setState(() {
+                            radioButtonItem = 'F';
+                            id = 2;
+                          });
+                        },
+                      ),
+                      const Text(
+                        'MUJER',
+                      ),
+                    ],
+                  ),
+                  const ListTile(
+                    title: Text(
+                      'Al hacer clic en registrarse, acepta nuestros Términos, Política de datos y Política de cookies',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  primaryButton('Registrarse', () async {
                     if (checkPassword(passwordController.text,
                         passwordConfirmController.text, context)) {
-                      registerWithMail(
-                          passwordController.text, emailController.text);
+                      int result = await registerWithMail(
+                          passwordController.text,
+                          emailController.text,
+                          usernameController.text,
+                          phoneController.text,
+                          radioButtonItem);
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MyApp(),
-                        ),
-                      );
+                      switch (result) {
+                        case 0:
+                          await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
+
+                          //navigate to home
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MyApp(),
+                            ),
+                          );
+                          break;
+                        case 1:
+                          checkRegisterAPI(
+                              "La cuenta ya existe para ese correo electrónico",
+                              context);
+
+                          break;
+                        case 2:
+                          checkRegisterAPI(
+                              'La contraseña proporcionada es demasiado débil',
+                              context);
+                          break;
+                        default:
+                          break;
+                      }
                     }
                   }),
                 ]))));
@@ -129,7 +223,7 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
     final scaffold = ScaffoldMessenger.of(context);
     if (text.length < 6) {
       scaffold.showSnackBar(const SnackBar(
-        content: Text('Password must be at least 6 characters'),
+        content: Text('La contraseña debe tener al menos 6 caracteres'),
         backgroundColor: Colors.red,
       ));
       return false;
@@ -137,11 +231,20 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
 
     if (text != text2) {
       scaffold.showSnackBar(const SnackBar(
-        content: Text('Passwords do not match'),
+        content: Text('Las contraseñas no coinciden'),
         backgroundColor: Colors.red,
       ));
       return false;
     }
     return true;
+  }
+
+  void checkRegisterAPI(String text, BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+
+    scaffold.showSnackBar(SnackBar(
+      content: Text(text),
+      backgroundColor: Colors.red,
+    ));
   }
 }

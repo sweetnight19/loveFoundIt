@@ -1,16 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:love_found_it/home/list_friends.dart';
-
-class HomeLess extends StatelessWidget {
-  const HomeLess({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomeFull(),
-    );
-  }
-}
+import 'package:love_found_it/profile/profile.dart';
 
 class HomeFull extends StatefulWidget {
   const HomeFull({Key? key}) : super(key: key);
@@ -24,38 +14,19 @@ class _HomeFullState extends State<HomeFull> {
 
   final List<Widget> _paginas = [
     const ListFull(),
+    const ProfilePageFull(
+      uuid: "8NGvV65Z3TMv6y0xLa512tiOtm53",
+    )
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'HOME',
-          style: TextStyle(
-            fontSize: 30,
-            color: Colors.black,
-          ),
-        ),
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        actions: <Widget>[
-          Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.blue,
-                ),
-              )),
-        ],
-      ),
       body: _paginas[_paginaActual],
       bottomNavigationBar: BottomNavigationBar(
+          elevation: 0,
+          selectedItemColor: Colors.pink[500],
           onTap: (value) {
             setState(() {
               _paginaActual = value;
@@ -63,9 +34,12 @@ class _HomeFullState extends State<HomeFull> {
           },
           currentIndex: _paginaActual,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_rounded), label: 'Profile'),
+                icon: Icon(Icons.home),
+                label: 'Home',
+                backgroundColor: Colors.pink),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle_rounded), label: 'Perfil'),
           ]),
     );
   }

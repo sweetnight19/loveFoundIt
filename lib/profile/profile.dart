@@ -50,7 +50,16 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            'PERFIL',
+            style: TextStyle(
+              fontSize: 30,
+              color: Colors.black,
+            ),
+          ),
           iconTheme: const IconThemeData(color: Colors.white),
+          automaticallyImplyLeading: false,
           elevation: 0,
           backgroundColor: Colors.transparent,
           actions: [

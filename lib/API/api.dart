@@ -1,13 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 Future<int> signInWithMail(String mail, String password) async {
   try {
-    UserCredential userCredential =
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: mail,
       password: password,
     );
-    print(userCredential);
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
       return 1;
@@ -18,30 +17,38 @@ Future<int> signInWithMail(String mail, String password) async {
   return 0;
 }
 
-void registerWithMail(String password, String mail) async {
+Future<int> registerWithMail(String password, String mail, String username,
+    String phone, String radioButtonItem) async {
   try {
     UserCredential userCredential =
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: mail,
       password: password,
     );
-    sendEmail();
+
+    FirebaseFirestore.instance
+        .collection('profile')
+        .doc(userCredential.user!.uid)
+        .set({
+      'username': username,
+      'mail': mail,
+      'phone_number': phone,
+      'gender': radioButtonItem,
+      'biography': '',
+      'cover': '',
+      'instagram': '',
+      'photo': '',
+      'twitter': '',
+    });
   } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
+    if (e.code == 'weak-password') {
+      return 2;
+    } else if (e.code == 'email-already-in-use') {
+      return 1;
     }
   }
-}
 
-void sendEmail() async {
-  User? user = FirebaseAuth.instance.currentUser;
-
-  if (user != null && !user.emailVerified) {
-    await user.sendEmailVerification();
-    print('Email sent');
-  }
+  return 0;
 }
 
 void recoveryWithEmail(String mail) async {
