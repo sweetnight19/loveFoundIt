@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:love_found_it/profile/edit_profile.dart';
@@ -18,15 +19,23 @@ class ProfilePageFull extends StatefulWidget {
 class _ProfilePageFullState extends State<ProfilePageFull> {
   final double coverHeight = 300;
   final double profileHeight = 150;
-
+  String? currentUserUid;
   Profile profile = Profile();
 
   // TODO: Replace this with shared preferences
-  bool isOwnProfile() => widget.uuid != null;
+  bool isOwnProfile = false;
 
   @override
   void initState() {
     super.initState();
+    if (FirebaseAuth.instance.currentUser != null) {
+      currentUserUid = FirebaseAuth.instance.currentUser!.uid;
+
+      if (currentUserUid != null && widget.uuid!= null && currentUserUid == widget.uuid) {
+        isOwnProfile = true;
+      }
+    }
+
     if (widget.uuid != null) {
       ProfileService.queryProfile(widget.uuid!).then((value) => {
             if (value == null)
@@ -65,7 +74,7 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
           actions: [
             Padding(
                 padding: const EdgeInsets.only(right: 20.0),
-                child: isOwnProfile() ? buildEditButton() : null),
+                child: isOwnProfile ? buildEditButton() : null),
           ],
         ),
         body: ListView(
