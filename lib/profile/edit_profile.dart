@@ -29,6 +29,21 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
   final twitterController = TextEditingController();
   final instagramController = TextEditingController();
 
+  @override
+  void initState() {
+    FirebaseFirestore.instance
+        .collection('profile')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((profile) => {
+              nameController.text = profile.get('name'),
+              biographyController.text = profile.get('biography'),
+              phoneController.text = profile.get('phone'),
+              twitterController.text = profile.get('twitter'),
+              instagramController.text = profile.get('instagram'),
+            });
+  }
+
   // Then upload to Firebase Storage
   Future<void> _upload(String inputSource) async {
     final picker = ImagePicker();
@@ -52,7 +67,8 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
               'description': 'Some description...'
             }));
 
-        FirebaseFirestore.instance.collection('profile')
+        FirebaseFirestore.instance
+            .collection('profile')
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .update({'photo': await storage.ref(fileName).getDownloadURL()});
 
@@ -187,18 +203,22 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
                 ),
                 Row(
                   children: [
-                    Expanded(child: primaryButton('Update profile', () =>
-                    {
-                      FirebaseFirestore.instance.collection('profile')
-                          .doc(FirebaseAuth.instance.currentUser!.uid)
-                          .update({
-                        'name': nameController.text,
-                        'biography': biographyController.text,
-                        'phone': phoneController.text,
-                        'instagram': instagramController.text,
-                        'twitter': twitterController.text
-                          })
-                    }))
+                    Expanded(
+                        child: primaryButton(
+                            'Update profile',
+                            () => {
+                                  FirebaseFirestore.instance
+                                      .collection('profile')
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                      .update({
+                                    'name': nameController.text,
+                                    'biography': biographyController.text,
+                                    'phone': phoneController.text,
+                                    'instagram': instagramController.text,
+                                    'twitter': twitterController.text
+                                  })
+                                }))
                   ],
                 )
               ],
