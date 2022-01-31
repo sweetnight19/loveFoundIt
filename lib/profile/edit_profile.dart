@@ -1,0 +1,219 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:love_found_it/widgets/primary_button.dart';
+import 'package:path/path.dart' as path;
+
+class EditProfilePageFull extends StatefulWidget {
+  final String? uuid;
+
+  const EditProfilePageFull({this.uuid, Key? key}) : super(key: key);
+
+  @override
+  _EditProfilePageFullState createState() => _EditProfilePageFullState();
+}
+
+class _EditProfilePageFullState extends State<EditProfilePageFull> {
+  FirebaseStorage storage = FirebaseStorage.instance;
+  String radioButtonItem = 'M';
+
+
+  @override
+  void initState() {
+
+  } // Select and image from the gallery or take a picture with the camera
+  // Then upload to Firebase Storage
+  Future<void> _upload(String inputSource) async {
+    final picker = ImagePicker();
+    XFile? pickedImage;
+    try {
+      pickedImage = await picker.pickImage(
+          source: inputSource == 'camera'
+              ? ImageSource.camera
+              : ImageSource.gallery,
+          maxWidth: 1920);
+
+      final String fileName = path.basename(pickedImage!.path);
+      File imageFile = File(pickedImage.path);
+
+      try {
+        // Uploading the selected image with some custom meta data
+        await storage.ref(fileName).putFile(
+            imageFile,
+            SettableMetadata(customMetadata: {
+              'uploaded_by': 'A bad guy',
+              'description': 'Some description...'
+            }));
+
+        // Refresh the UI
+        setState(() {});
+      } on FirebaseException catch (error) {
+        if (kDebugMode) {
+          print(error);
+        }
+      }
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+    }
+  }
+
+  // Retriew the uploaded images
+  // This function is called when the app launches for the first time or when an image is uploaded or deleted
+  Future<List<Map<String, dynamic>>> _loadImages() async {
+    List<Map<String, dynamic>> files = [];
+
+    final ListResult result = await storage.ref().list();
+    final List<Reference> allFiles = result.items;
+
+    await Future.forEach<Reference>(allFiles, (file) async {
+      final String fileUrl = await file.getDownloadURL();
+      final FullMetadata fileMeta = await file.getMetadata();
+      files.add({
+        "url": fileUrl,
+        "path": file.fullPath,
+        "uploaded_by": fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
+        "description":
+            fileMeta.customMetadata?['description'] ?? 'No description'
+      });
+    });
+
+    return files;
+  }
+
+  // Delete the selected image
+  // This function is called when a trash icon is pressed
+  Future<void> _delete(String ref) async {
+    await storage.ref(ref).delete();
+    // Rebuild the UI
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          'EDIT PROFILE',
+          style: TextStyle(
+            fontSize: 30,
+            color: Colors.black,
+          ),
+        ),
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton.icon(
+                    onPressed: () => _upload('camera'),
+                    icon: const Icon(Icons.camera),
+                    label: const Text('camera')),
+                ElevatedButton.icon(
+                    onPressed: () => _upload('gallery'),
+                    icon: const Icon(Icons.library_add),
+                    label: const Text('Gallery')),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter name',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter biography',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter phone number',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter phone twitter',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter phone instagram',
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Radio(
+                      value: 1,
+                      groupValue: 1,
+                      onChanged: (val) {
+                        setState(() {
+                          radioButtonItem = 'M';
+                        });
+                      },
+                    ),
+                    const Text(
+                      'HOMBRE',
+                    ),
+                    Radio(
+                      value: 2,
+                      groupValue: 1,
+                      onChanged: (val) {
+                        setState(() {
+                          radioButtonItem = 'F';
+                        });
+                      },
+                    ),
+                    const Text(
+                      'MUJER',
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(child: primaryButton('Update profile'))
+                  ],
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
