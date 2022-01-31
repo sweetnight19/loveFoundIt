@@ -46,7 +46,9 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
               'description': 'Some description...'
             }));
 
-        FirebaseFirestore.instance.collection('profile').doc(FirebaseAuth.instance.currentUser!.uid).update({'photo': await storage.ref(fileName).getDownloadURL()});
+        FirebaseFirestore.instance.collection('profile')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({'photo': await storage.ref(fileName).getDownloadURL()});
 
         // Refresh the UI
         setState(() {});
