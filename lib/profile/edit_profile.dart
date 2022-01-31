@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +23,27 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
   FirebaseStorage storage = FirebaseStorage.instance;
   String radioButtonItem = 'M';
 
+  final phoneController = TextEditingController();
+  final nameController = TextEditingController();
+  final biographyController = TextEditingController();
+  final twitterController = TextEditingController();
+  final instagramController = TextEditingController();
 
   @override
   void initState() {
+    FirebaseFirestore.instance
+        .collection('profile')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((profile) => {
+              nameController.text = profile.get('name'),
+              biographyController.text = profile.get('biography'),
+              phoneController.text = profile.get('phone'),
+              twitterController.text = profile.get('twitter'),
+              instagramController.text = profile.get('instagram'),
+            });
+  }
 
-  } // Select and image from the gallery or take a picture with the camera
   // Then upload to Firebase Storage
   Future<void> _upload(String inputSource) async {
     final picker = ImagePicker();
@@ -49,6 +67,11 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
               'description': 'Some description...'
             }));
 
+        FirebaseFirestore.instance
+            .collection('profile')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({'photo': await storage.ref(fileName).getDownloadURL()});
+
         // Refresh the UI
         setState(() {});
       } on FirebaseException catch (error) {
@@ -61,37 +84,6 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
         print(err);
       }
     }
-  }
-
-  // Retriew the uploaded images
-  // This function is called when the app launches for the first time or when an image is uploaded or deleted
-  Future<List<Map<String, dynamic>>> _loadImages() async {
-    List<Map<String, dynamic>> files = [];
-
-    final ListResult result = await storage.ref().list();
-    final List<Reference> allFiles = result.items;
-
-    await Future.forEach<Reference>(allFiles, (file) async {
-      final String fileUrl = await file.getDownloadURL();
-      final FullMetadata fileMeta = await file.getMetadata();
-      files.add({
-        "url": fileUrl,
-        "path": file.fullPath,
-        "uploaded_by": fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
-        "description":
-            fileMeta.customMetadata?['description'] ?? 'No description'
-      });
-    });
-
-    return files;
-  }
-
-  // Delete the selected image
-  // This function is called when a trash icon is pressed
-  Future<void> _delete(String ref) async {
-    await storage.ref(ref).delete();
-    // Rebuild the UI
-    setState(() {});
   }
 
   @override
@@ -133,6 +125,7 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: TextField(
+                    controller: nameController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter name',
@@ -142,6 +135,7 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: TextField(
+                    controller: biographyController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter biography',
@@ -151,6 +145,7 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: TextField(
+                    controller: phoneController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter phone number',
@@ -160,18 +155,20 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: TextField(
+                    controller: twitterController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Enter phone twitter',
+                      hintText: 'Enter the twitter',
                     ),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: TextField(
+                    controller: instagramController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Enter phone instagram',
+                      hintText: 'Enter instagram',
                     ),
                   ),
                 ),
@@ -206,7 +203,22 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
                 ),
                 Row(
                   children: [
-                    Expanded(child: primaryButton('Update profile'))
+                    Expanded(
+                        child: primaryButton(
+                            'Update profile',
+                            () => {
+                                  FirebaseFirestore.instance
+                                      .collection('profile')
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                      .update({
+                                    'name': nameController.text,
+                                    'biography': biographyController.text,
+                                    'phone': phoneController.text,
+                                    'instagram': instagramController.text,
+                                    'twitter': twitterController.text
+                                  })
+                                }))
                   ],
                 )
               ],
