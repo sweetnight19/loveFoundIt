@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:love_found_it/profile/edit_profile.dart';
 import 'package:love_found_it/profile/service/profile.service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -65,7 +66,14 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
 
   GestureDetector buildEditButton() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const EditProfilePageFull(uuid: '8NGvV65Z3TMv6y0xLa512tiOtm53'),
+          ),
+        );
+      },
       child: const Icon(Icons.edit),
     );
   }
