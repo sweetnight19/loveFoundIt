@@ -54,6 +54,19 @@ class _ListFullState extends State<ListFull> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            'HOME',
+            style: TextStyle(
+              fontSize: 30,
+              color: Colors.black,
+            ),
+          ),
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.transparent,
+        ),
         backgroundColor: Colors.transparent,
         body: StreamBuilder<QuerySnapshot>(
             stream: _usersStream,

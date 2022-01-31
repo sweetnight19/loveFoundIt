@@ -1,16 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:love_found_it/home/list_friends.dart';
-
-class HomeLess extends StatelessWidget {
-  const HomeLess({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomeFull(),
-    );
-  }
-}
+import 'package:love_found_it/profile/profile.dart';
 
 class HomeFull extends StatefulWidget {
   const HomeFull({Key? key}) : super(key: key);
@@ -24,25 +14,15 @@ class _HomeFullState extends State<HomeFull> {
 
   final List<Widget> _paginas = [
     const ListFull(),
+    const ProfilePageFull(
+      uuid: "8NGvV65Z3TMv6y0xLa512tiOtm53",
+    )
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'HOME',
-          style: TextStyle(
-            fontSize: 30,
-            color: Colors.black,
-          ),
-        ),
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-      ),
       body: _paginas[_paginaActual],
       bottomNavigationBar: BottomNavigationBar(
           elevation: 0,
