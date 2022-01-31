@@ -23,6 +23,12 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
   FirebaseStorage storage = FirebaseStorage.instance;
   String radioButtonItem = 'M';
 
+  final phoneController = TextEditingController();
+  final nameController = TextEditingController();
+  final biographyController = TextEditingController();
+  final twitterController = TextEditingController();
+  final instagramController = TextEditingController();
+
   // Then upload to Firebase Storage
   Future<void> _upload(String inputSource) async {
     final picker = ImagePicker();
@@ -103,6 +109,7 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: TextField(
+                    controller: nameController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter name',
@@ -112,6 +119,7 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: TextField(
+                    controller: biographyController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter biography',
@@ -121,6 +129,7 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: TextField(
+                    controller: phoneController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter phone number',
@@ -130,18 +139,20 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: TextField(
+                    controller: twitterController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Enter phone twitter',
+                      hintText: 'Enter the twitter',
                     ),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: TextField(
+                    controller: instagramController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Enter phone instagram',
+                      hintText: 'Enter instagram',
                     ),
                   ),
                 ),
@@ -176,7 +187,18 @@ class _EditProfilePageFullState extends State<EditProfilePageFull> {
                 ),
                 Row(
                   children: [
-                    Expanded(child: primaryButton('Update profile'))
+                    Expanded(child: primaryButton('Update profile', () =>
+                    {
+                      FirebaseFirestore.instance.collection('profile')
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .update({
+                        'name': nameController.text,
+                        'biography': biographyController.text,
+                        'phone': phoneController.text,
+                        'instagram': instagramController.text,
+                        'twitter': twitterController.text
+                          })
+                    }))
                   ],
                 )
               ],
