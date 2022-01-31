@@ -105,19 +105,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         }),
                       ),
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 50),
-                        child: primaryButton('Profile', () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ProfilePageFull(uuid: '8NGvV65Z3TMv6y0xLa512tiOtm53'),
-                            ),
-                          );
-                        }),
-                      ),
-                    )
                   ],
                 ),
                 const SizedBox(height: 10),
