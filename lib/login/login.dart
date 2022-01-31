@@ -7,15 +7,6 @@ import 'package:sign_button/sign_button.dart';
 import '../custom_widget.dart';
 import 'recovery.dart';
 
-class LoginPageLess extends StatelessWidget {
-  const LoginPageLess({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(home: LoginPageFull());
-  }
-}
-
 class LoginPageFull extends StatefulWidget {
   const LoginPageFull({Key? key}) : super(key: key);
 
