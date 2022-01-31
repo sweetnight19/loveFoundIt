@@ -88,6 +88,8 @@ class _LoginPageFullState extends State<LoginPageFull> {
                                     'photo': '',
                                     'twitter': '',
                                     'friends': [],
+                                    'cover':
+                                        'https://www.elcampico.org/wp-content/uploads/2016/04/dummy-post-horisontal.jpg',
                                   });
                                 }
 

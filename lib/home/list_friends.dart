@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:love_found_it/home/add_friends.dart';
 import 'package:love_found_it/profile/profile.dart';
-import 'package:path/path.dart';
 
 class ListFull extends StatefulWidget {
   const ListFull({Key? key}) : super(key: key);
@@ -38,6 +37,15 @@ class _ListFullState extends State<ListFull> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+          ),
           centerTitle: true,
           title: const Text(
             'HOME',
@@ -73,8 +81,8 @@ class _ListFullState extends State<ListFull> {
                   if (data['gender'] == 'M') {
                     return ListTile(
                       leading: Container(
-                        width: 30,
-                        height: 30,
+                        width: 50,
+                        height: 50,
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
@@ -98,8 +106,8 @@ class _ListFullState extends State<ListFull> {
                   } else {
                     return ListTile(
                       leading: Container(
-                        width: 30,
-                        height: 30,
+                        width: 50,
+                        height: 50,
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
