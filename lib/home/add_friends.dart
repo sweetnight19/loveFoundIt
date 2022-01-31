@@ -22,7 +22,7 @@ class _AddFriendFullState extends State<AddFriendFull> {
         ),
         centerTitle: true,
         title: const Text(
-          'ADD FRIEND',
+          'AÑADIR AMIGO',
           style: TextStyle(
             fontSize: 30,
             color: Colors.black,
@@ -42,17 +42,12 @@ class _AddFriendFullState extends State<AddFriendFull> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
               controller: idController,
-              decoration: InputDecoration(
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
-                hintText: 'Enter your friend\'s ID',
-                hintStyle: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
+                hintText: "Introduce el ID del amigo",
+                border: OutlineInputBorder(),
               ),
             ),
           ),
@@ -74,10 +69,10 @@ class _AddFriendFullState extends State<AddFriendFull> {
                     });
                     Navigator.of(context).pop();
                   } catch (e) {
-                    checkAddFriendAPI("This ID does not exist", context);
+                    checkAddFriendAPI("Este ID no existe", context);
                   }
                 },
-                child: const Text("SEND IT"),
+                child: const Text("ENVIAR"),
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
               )),
@@ -85,7 +80,10 @@ class _AddFriendFullState extends State<AddFriendFull> {
             height: 250,
           ),
           const Center(
-            child: Text("YOUR ID"),
+            child: Text("Tu ID:"),
+          ),
+          const SizedBox(
+            height: 10,
           ),
           Center(
             child: SelectableText(

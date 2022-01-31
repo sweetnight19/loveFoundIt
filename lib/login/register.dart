@@ -40,13 +40,24 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
   var usernameController = TextEditingController();
+  String radioButtonItem = 'M';
+  int id = 1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            'REGISTRO',
+            style: TextStyle(
+              fontSize: 30,
+              color: Colors.black,
+            ),
+          ),
           elevation: 0,
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
         ),
         body: Center(
@@ -54,27 +65,21 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                 decoration: customBackground(),
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: ListView(children: <Widget>[
+                  const SizedBox(height: 50),
                   const Text(
-                    'Register',
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'Please fill in the form below to register',
+                    'Por favor complete el siguiente formulario para registrarse',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
                   TextField(
                     controller: usernameController,
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
                       hintText: "Username",
                       border: OutlineInputBorder(),
                     ),
@@ -85,6 +90,8 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                     obscureText: true,
                     keyboardType: TextInputType.visiblePassword,
                     decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
                       hintText: "Password",
                       border: OutlineInputBorder(),
                     ),
@@ -95,7 +102,9 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                     obscureText: true,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
-                      hintText: "Confirm Password",
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: "Confirmar Password",
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -104,6 +113,8 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
                       hintText: "Email",
                       border: OutlineInputBorder(),
                     ),
@@ -113,11 +124,56 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                     controller: phoneController,
                     keyboardType: TextInputType.phone,
                     decoration: const InputDecoration(
-                      hintText: "Phone Number",
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: "Número de teléfono",
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Radio(
+                        value: 1,
+                        groupValue: id,
+                        onChanged: (val) {
+                          setState(() {
+                            radioButtonItem = 'M';
+                            id = 1;
+                          });
+                        },
+                      ),
+                      const Text(
+                        'HOMBRE',
+                      ),
+                      Radio(
+                        value: 2,
+                        groupValue: id,
+                        onChanged: (val) {
+                          setState(() {
+                            radioButtonItem = 'F';
+                            id = 2;
+                          });
+                        },
+                      ),
+                      const Text(
+                        'MUJER',
+                      ),
+                    ],
+                  ),
+                  const ListTile(
+                    title: Text(
+                      'Al hacer clic en registrarse, acepta nuestros Términos, Política de datos y Política de cookies',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   primaryButton('Registrarse', () async {
                     if (checkPassword(passwordController.text,
                         passwordConfirmController.text, context)) {
@@ -125,12 +181,12 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                           passwordController.text,
                           emailController.text,
                           usernameController.text,
-                          phoneController.text);
+                          phoneController.text,
+                          radioButtonItem);
 
                       switch (result) {
                         case 0:
-                          UserCredential userCredential = await FirebaseAuth
-                              .instance
+                          await FirebaseAuth.instance
                               .signInWithEmailAndPassword(
                             email: emailController.text,
                             password: passwordController.text,
@@ -146,13 +202,14 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
                           break;
                         case 1:
                           checkRegisterAPI(
-                              "The account already exists for that email",
+                              "La cuenta ya existe para ese correo electrónico",
                               context);
 
                           break;
                         case 2:
                           checkRegisterAPI(
-                              'The password provided is too weak', context);
+                              'La contraseña proporcionada es demasiado débil',
+                              context);
                           break;
                         default:
                           break;
@@ -166,7 +223,7 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
     final scaffold = ScaffoldMessenger.of(context);
     if (text.length < 6) {
       scaffold.showSnackBar(const SnackBar(
-        content: Text('Password must be at least 6 characters'),
+        content: Text('La contraseña debe tener al menos 6 caracteres'),
         backgroundColor: Colors.red,
       ));
       return false;
@@ -174,7 +231,7 @@ class _RegisterPageFullState extends State<RegisterPageFull> {
 
     if (text != text2) {
       scaffold.showSnackBar(const SnackBar(
-        content: Text('Passwords do not match'),
+        content: Text('Las contraseñas no coinciden'),
         backgroundColor: Colors.red,
       ));
       return false;

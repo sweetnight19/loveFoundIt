@@ -11,26 +11,90 @@ class ListFull extends StatefulWidget {
 }
 
 class _ListFullState extends State<ListFull> {
-  var profile;
+  final Stream<QuerySnapshot> _usersStream =
+      FirebaseFirestore.instance.collection('profile').snapshots();
+
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  late List<String> list;
 
   @override
   void initState() {
-    getInfo();
+    getFriends();
+    super.initState();
   }
 
-  void getInfo() async {
-    profile = await FirebaseFirestore.instance
-        .collection('profile')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
-    print("friendssss: " + profile.get('friends')[1]);
+  void getFriends() async {
+    QuerySnapshot profile =
+        await FirebaseFirestore.instance.collection("profile").get();
+
+/*
+    if (profile.docs.isNotEmpty) {
+      for (var id in profile.docs) {
+        try {
+          for (var friend in id["friends"]) {
+            print("friends: " + friend);
+            print("profile: " + profile.docs.
+            print(id["username"] +
+                " tiene como amigo: " +
+                profile.docs[friend].get("username"));
+          }
+        } catch (e) {
+          print(e);
+        }
+      }
+    }
+    */
+    /*
+    FirebaseFirestore.instance.collection('users').doc(uid).get().then((value) {
+      list = value.get("friends");
+    });
+    */
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.transparent,
-        //body: ListView.builder(itemBuilder: (BuildContext buildContext,int index){buildBody(buildContext, index))},itemCount: profile.get('friends').length,);
+        body: StreamBuilder<QuerySnapshot>(
+            stream: _usersStream,
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return const Text('Algo salió mal :(');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text("Cargando...");
+              }
+
+              return ListView(
+                  children:
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                if (data['gender'] == 'M') {
+                  return ListTile(
+                    leading: const Icon(
+                      Icons.male_rounded,
+                      color: Colors.blue,
+                    ),
+                    trailing: const Icon(Icons.assignment_ind_rounded),
+                    title: Text(data['username']),
+                    subtitle: Text(data['mail']),
+                  );
+                } else {
+                  return ListTile(
+                    leading: const Icon(
+                      Icons.female_rounded,
+                      color: Colors.pink,
+                    ),
+                    trailing: const Icon(Icons.assignment_ind_rounded),
+                    title: Text(data['username']),
+                    subtitle: Text(data['mail']),
+                  );
+                }
+              }).toList());
+            }),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context,
@@ -49,3 +113,62 @@ ListTile(
           subtitle: Text(profile.get("phone_number").toString()),
           trailing: Icon(Icons.arrow_forward_ios),
         ),*/ 
+
+
+
+        /*
+        ListView.builder(
+          itemBuilder: (BuildContext buildContext, int index) {
+            return ListTile(
+              title: Text(
+                friendsList[index].name,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(friendsList[index].email),
+              trailing: const Icon(Icons.arrow_forward_ios),
+            );
+          },
+          itemCount: friendsList.length,
+        ),
+        */
+
+
+
+
+        /*
+        StreamBuilder<QuerySnapshot>(
+            stream: _usersStream,
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              return ListView(
+                  children:
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                if (data['gender'] == 'M') {
+                  return ListTile(
+                    leading: const Icon(
+                      Icons.male_rounded,
+                      color: Colors.blue,
+                    ),
+                    trailing: const Icon(Icons.assignment_ind_rounded),
+                    title: Text(data['username']),
+                    subtitle: Text(data['mail']),
+                  );
+                } else {
+                  return ListTile(
+                    leading: const Icon(
+                      Icons.female_rounded,
+                      color: Colors.pink,
+                    ),
+                    trailing: const Icon(Icons.assignment_ind_rounded),
+                    title: Text(data['username']),
+                    subtitle: Text(data['mail']),
+                  );
+                }
+              }).toList());
+            }),
+         */

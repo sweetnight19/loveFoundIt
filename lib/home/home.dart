@@ -59,7 +59,7 @@ class _HomeFullState extends State<HomeFull> {
                 label: 'Home',
                 backgroundColor: Colors.pink),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_rounded), label: 'Profile'),
+                icon: Icon(Icons.account_circle_rounded), label: 'Perfil'),
           ]),
     );
   }

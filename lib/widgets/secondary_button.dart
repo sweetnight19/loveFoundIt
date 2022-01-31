@@ -13,10 +13,10 @@ ElevatedButton secondaryButton(text, [callback]) {
           padding: MaterialStateProperty.all(
               const EdgeInsets.symmetric(vertical: 20)),
           backgroundColor:
-              MaterialStateProperty.all(SECONDARY_BUTTON_BACKGROUND_COLOR)),
+              MaterialStateProperty.all(secondaryButtonBackgroundColor)),
       child: Text(
         text,
-        style: const TextStyle(color: SECONDARY_BUTTON_FONT_COLOR),
+        style: const TextStyle(color: secondaryButtonFontColor),
       ),
       onPressed: callback);
 }
