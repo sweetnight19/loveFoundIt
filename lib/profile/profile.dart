@@ -163,7 +163,7 @@ class _ProfilePageFullState extends State<ProfilePageFull> {
 
   Widget buildPhoneIcon(String? link) {
     if (link != null) {
-      return buildSocialIcon(FontAwesomeIcons.phone, link);
+      return buildSocialIcon(FontAwesomeIcons.phone, "tel:" + link);
     } else {
       return buildSocialIcon(FontAwesomeIcons.phone, "");
     }
